@@ -276,6 +276,7 @@ class ForgejoAuth(object):
             "admin",
             "auth",
             "list",
+            "--vertical-bars",
             "--work-path", self.working_dir,
             "--config", self.config,
         ]
@@ -284,8 +285,8 @@ class ForgejoAuth(object):
         # self.module.log(msg=f"  args_list : '{args_list}'")
         rc, out, err = self._exec(args_list)
 
-        outer_pattern = re.compile(r".*ID\s+Name\s+Type\s+Enabled\n(?P<data>.*)", flags=re.MULTILINE | re.DOTALL)
-        inner_pattern = re.compile(r"(?P<ID>\d+)\s+(?P<name>\w+)\s+(?P<type>[a-zA-Z+_\-\(\ \)\.]+)\s+(?P<enabled>\w+)", flags=re.MULTILINE | re.DOTALL)
+        outer_pattern = re.compile(r".*ID\s+\|Name\s+\|Type\s+\|Enabled\n(?P<data>.*)", flags=re.MULTILINE | re.DOTALL)
+        inner_pattern = re.compile(r"(?P<ID>\d+)\s*\|(?P<name>.+?)\s*\|(?P<type>[a-zA-Z+_\-\(\ \)\.]+?)\s*\|(?P<enabled>\w+)", flags=re.MULTILINE | re.DOTALL)
         outer_re_result = re.search(outer_pattern, out)
 
         if outer_re_result:

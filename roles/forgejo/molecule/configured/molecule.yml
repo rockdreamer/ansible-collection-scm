@@ -52,6 +52,8 @@ scenario:
     - create
     - prepare
     - converge
+    # Running converge twice to test the user module
+    - converge
     - verify
     - destroy
 

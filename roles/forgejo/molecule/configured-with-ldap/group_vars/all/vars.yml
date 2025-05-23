@@ -55,7 +55,8 @@ forgejo_admin_user:
 forgejo_auths:
   ldap:
     state: "present"
-    name: "ldap"
+    # Forgejo allows many special characters in the name, including spaces.
+    name: "ldap-@foo_ bar.#!"
     active: true
     security_protocol: "Unencrypted"
     # skip_tls_verify: ""
