@@ -149,6 +149,12 @@ def test_forgejo_files(host, get_vars):
         f = host.file(_file)
         assert f.is_file
 
+def test_default_sshd(host, get_vars):
+    """ We do not want to set the GIT_PROTOCOL env variable in sshd_config by default
+    """
+    f = host.file("/etc/ssh/sshd_config")
+    assert not f.is_file or not f.contains("AcceptEnv GIT_PROTOCOL")
+
 
 def test_user(host, get_vars):
     """

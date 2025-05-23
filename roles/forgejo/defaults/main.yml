@@ -74,4 +74,5 @@ forgejo_time: {}
 forgejo_ui: {}
 forgejo_webhook: {}
 
+forgejo_allow_git_protocol_in_sshd_environment: false
 ...

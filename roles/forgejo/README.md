@@ -1432,6 +1432,8 @@ forgejo_auths:
     attributes_in_bind: ""                        # Fetch attributes in bind DN context.
     synchronize_users: ""                         # Enable/ Disable user synchronization.
 
+# Add a line in /etc/ssh/sshd_config allowing the GIT_PROTOCOL environment variable to pass through
+forgejo_allow_git_protocol_in_sshd_environment: true
 ```
 
 ## Contribution

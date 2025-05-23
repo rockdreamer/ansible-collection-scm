@@ -45,6 +45,17 @@
     - restart forgejo
     - check if forgejo are available
 
+- name: Add AcceptEnv GIT_PROTOCOL
+  ansible.builtin.lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: 'AcceptEnv GIT_PROTOCOL'
+    line: 'AcceptEnv GIT_PROTOCOL'
+    state: present
+    insertafter: 'AcceptEnv '
+  when: forgejo_allow_git_protocol_in_sshd_environment
+  notify:
+    - restart sshd
+
 - name: restart forgejo if needed
   ansible.builtin.meta: flush_handlers
 
