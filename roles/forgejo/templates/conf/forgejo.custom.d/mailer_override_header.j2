@@ -1,0 +1,9 @@
+;; From ansible jinja template mailer_override_header.j2
+
+  {% if forgejo_mailer.override_header is defined and forgejo_mailer.override_header is mapping
+      and forgejo_mailer.override_header | count > 0 %}
+[mailer.override_header]
+    {% for k, v in forgejo_mailer.override_header.items() %}
+{{ k }} = {{ v }}
+    {% endfor %}
+  {% endif %}

@@ -1,0 +1,23 @@
+{#
+Each element under storage, except repo-archive, packages, actions_log can be
+a storage definition that can then be used by one or more of the storage types above.
+
+It could be of STORAGE_TYPE = minio
+And then MINIO_ENDPOINT, MINIO_ACCESS_KEY_ID, MINIO_SECRET_ACCESS_KEY, MINIO_BUCKET,
+MINIO_BUCKET_LOOKUP, MINIO_LOCATION, MINIO_USE_SSL, MINIO_INSECURE_SKIP_VERIFY
+
+It could be of STORAGE_TYPE = local
+And then PATH is the only required key.
+#}
+;; From ansible jinja template storage_custom.j2
+
+{% if forgejo_storage is defined and forgejo_storage is mapping and forgejo_storage | count > 0 %}
+  {% for k, v in forgejo_storage.items() %}
+    {% if k not in ["repo-archive", "packages", "actions_log"] and v is mapping and v | count > 0 %}
+[storage.{{ k }}]
+      {% for k2, v2 in v.items() %}
+{{ k | upper }} = {{ v2 }}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+{% endif %}

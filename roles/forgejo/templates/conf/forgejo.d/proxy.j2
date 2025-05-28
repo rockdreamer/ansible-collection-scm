@@ -1,9 +1,22 @@
+;; Ansible jinja template proxy.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_proxy is defined and forgejo_proxy | count > 0 and
+    forgejo_proxy.proxy_enabled | default('false') | bool %}
 
 [proxy]
+
+
+{% if forgejo_proxy.proxy_enabled | default('') | string | length > 0 %}
 PROXY_ENABLED = {{ forgejo_proxy.proxy_enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% if forgejo_proxy.proxy_url | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_proxy.proxy_url | default('') | string | length > 0 %}
 PROXY_URL = {{ forgejo_proxy.proxy_url }}
-  {% endif %}
-  {% if forgejo_proxy.proxy_hosts | count > 0 %}
+{% endif %}
+
+{% if forgejo_proxy.proxy_hosts is defined and
+forgejo_proxy.proxy_hosts | count > 0 %}
 PROXY_HOSTS = {{ forgejo_proxy.proxy_hosts | join(', ') }}
-  {% endif %}
+{% endif %}
+{% endif %}

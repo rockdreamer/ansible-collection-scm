@@ -1,27 +1,50 @@
+;; Ansible jinja template oauth2.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_oauth2 is defined and
+    forgejo_oauth2 | count > 0 %}
 
 [oauth2]
-ENABLED = {{ forgejo_oauth2.enabled | default('false') | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% if forgejo_oauth2.jwt_signing_algorithm | default('') | string | length > 0 and
-        forgejo_oauth2.jwt_signing_algorithm in ["HS256", "HS384", "HS512", "RS256", "RS384", "RS512", "ES256", "ES384", "ES512", "EdDSA"] %}
+
+
+{% if forgejo_oauth2.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_oauth2.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_oauth2.jwt_signing_algorithm | default('') | string | length > 0 %}
 JWT_SIGNING_ALGORITHM = {{ forgejo_oauth2.jwt_signing_algorithm }}
-  {% endif %}
-  {% if forgejo_oauth2.jwt_signing_algorithm in ["RS256", "RS384", "RS512", "ES256", "ES384", "ES512"] and
-        forgejo_oauth2.jwt_signing_private_key_file | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_oauth2.jwt_signing_private_key_file | default('') | string | length > 0 %}
 JWT_SIGNING_PRIVATE_KEY_FILE = {{ forgejo_oauth2.jwt_signing_private_key_file }}
-  {% endif %}
-  {% if forgejo_oauth2.jwt_signing_algorithm in ["HS256", "HS384", "HS512"] and
-        forgejo_oauth2.jwt_secret | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_oauth2.jwt_secret | default('') | string | length > 0 %}
 JWT_SECRET = {{ forgejo_oauth2.jwt_secret }}
-  {% endif %}
-  {% if forgejo_oauth2.access_token_expiration_time | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_oauth2.jwt_secret_uri | default('') | string | length > 0 %}
+JWT_SECRET_URI = {{ forgejo_oauth2.jwt_secret_uri }}
+{% endif %}
+
+{% if forgejo_oauth2.access_token_expiration_time | default('') | string | length > 0 %}
 ACCESS_TOKEN_EXPIRATION_TIME = {{ forgejo_oauth2.access_token_expiration_time }}
-  {% endif %}
-  {% if forgejo_oauth2.refresh_token_expiration_time | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_oauth2.refresh_token_expiration_time | default('') | string | length > 0 %}
 REFRESH_TOKEN_EXPIRATION_TIME = {{ forgejo_oauth2.refresh_token_expiration_time }}
-  {% endif %}
-  {% if forgejo_oauth2.invalidate_refresh_tokens | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_oauth2.invalidate_refresh_tokens | default('') | string | length > 0 %}
 INVALIDATE_REFRESH_TOKENS = {{ forgejo_oauth2.invalidate_refresh_tokens | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
-  {% if forgejo_oauth2.max_token_length | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_oauth2.max_token_length | default('') | string | length > 0 %}
 MAX_TOKEN_LENGTH = {{ forgejo_oauth2.max_token_length }}
-  {% endif %}
+{% endif %}
+
+{% if forgejo_oauth2.default_applications is defined and
+forgejo_oauth2.default_applications | count > 0 %}
+DEFAULT_APPLICATIONS = {{ forgejo_oauth2.default_applications | join(', ') }}
+{% endif %}
+{% endif %}

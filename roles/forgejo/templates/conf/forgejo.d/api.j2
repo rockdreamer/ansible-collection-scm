@@ -1,17 +1,29 @@
+;; Ansible jinja template api.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_api is defined and
+    forgejo_api | count > 0 %}
 
 [api]
-  {% if forgejo_api.enable_swagger | default('') | string | length > 0 %}
+
+
+{% if forgejo_api.enable_swagger | default('') | string | length > 0 %}
 ENABLE_SWAGGER = {{ forgejo_api.enable_swagger | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
-  {% if forgejo_api.max_response_items | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_api.max_response_items | default('') | string | length > 0 %}
 MAX_RESPONSE_ITEMS = {{ forgejo_api.max_response_items }}
-  {% endif %}
-  {% if forgejo_api.default_paging_num | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_api.default_paging_num | default('') | string | length > 0 %}
 DEFAULT_PAGING_NUM = {{ forgejo_api.default_paging_num }}
-  {% endif %}
-  {% if forgejo_api.default_git_trees_per_page | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_api.default_git_trees_per_page | default('') | string | length > 0 %}
 DEFAULT_GIT_TREES_PER_PAGE = {{ forgejo_api.default_git_trees_per_page }}
-  {% endif %}
-  {% if forgejo_api.default_max_blob_size | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_api.default_max_blob_size | default('') | string | length > 0 %}
 DEFAULT_MAX_BLOB_SIZE = {{ forgejo_api.default_max_blob_size }}
-  {% endif %}
+{% endif %}
+{% endif %}

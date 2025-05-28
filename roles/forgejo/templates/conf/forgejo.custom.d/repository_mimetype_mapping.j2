@@ -1,0 +1,10 @@
+;; From ansible jinja template repository_mimetype_mapping.j2
+
+  {% if forgejo_repository.mimetype_mapping is defined and
+        forgejo_repository.mimetype_mapping is mapping and
+        forgejo_repository.mimetype_mapping | count > 0 %}
+[git.config]
+    {% for k, v in forgejo_repository.mimetype_mapping.items() %}
+{{ k }} = {{ v }}
+    {% endfor %}
+  {% endif %}

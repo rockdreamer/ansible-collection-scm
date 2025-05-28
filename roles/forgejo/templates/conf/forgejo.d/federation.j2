@@ -1,21 +1,40 @@
+;; Ansible jinja template federation.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_federation is defined and forgejo_federation | count > 0 and
+    forgejo_federation.enabled | default('false') | bool %}
 
 [federation]
-ENABLED = {{ forgejo_federation.enabled | default('false') | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% if forgejo_federation.share_user_statistics | default('') | string | length > 0 %}
+
+
+{% if forgejo_federation.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_federation.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_federation.share_user_statistics | default('') | string | length > 0 %}
 SHARE_USER_STATISTICS = {{ forgejo_federation.share_user_statistics | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
-  {% if forgejo_federation.max_size | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_federation.max_size | default('') | string | length > 0 %}
 MAX_SIZE = {{ forgejo_federation.max_size }}
-  {% endif %}
-  {% if forgejo_federation.algorithms | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_federation.algorithms is defined and
+forgejo_federation.algorithms | count > 0 %}
 ALGORITHMS = {{ forgejo_federation.algorithms | join(', ') }}
-  {% endif %}
-  {% if forgejo_federation.digest_algorithm | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_federation.digest_algorithm | default('') | string | length > 0 %}
 DIGEST_ALGORITHM = {{ forgejo_federation.digest_algorithm }}
-  {% endif %}
-  {% if forgejo_federation.get_headers | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_federation.get_headers is defined and
+forgejo_federation.get_headers | count > 0 %}
 GET_HEADERS = {{ forgejo_federation.get_headers | join(', ') }}
-  {% endif %}
-  {% if forgejo_federation.post_headers | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_federation.post_headers is defined and
+forgejo_federation.post_headers | count > 0 %}
 POST_HEADERS = {{ forgejo_federation.post_headers | join(', ') }}
-  {% endif %}
+{% endif %}
+{% endif %}

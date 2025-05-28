@@ -1,18 +1,41 @@
+;; Ansible jinja template queue.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_queue is defined and
+    forgejo_queue | count > 0 %}
 
 [queue]
-  {% set queue_parameters = [
-    "type", "datadir", "length", "batch_length", "conn_str", "queue_name", "set_name",
-    "wrap_if_necessary", "max_attempts", "timeout", "workers", "max_workers",
-    "block_timeout", "boost_timeout", "boost_workers"] %}
-  {% set default_queue = forgejo_queue.default %}
-  {% set forgejo_queue = forgejo_queue.pop('default') %}
-  {% for k, v in default_queue.items() %}
-    {% if k in queue_parameters and v | default('') | string | length > 0 %}
-{{ k | upper }} = {{ v | bodsch.core.config_bool(true_as='true', false_as='false') }}
-    {% endif %}
-  {% endfor %}
-  {#
-    TODO
-      Specific queues can be individually configured with [queue.name]. [queue] provides defaults
-      ([queue.issue_indexer] is special due to the old configuration described above)
-  #}
+
+
+{% if forgejo_queue.type | default('') | string | length > 0 %}
+TYPE = {{ forgejo_queue.type }}
+{% endif %}
+
+{% if forgejo_queue.datadir | default('') | string | length > 0 %}
+DATADIR = {{ forgejo_queue.datadir }}
+{% endif %}
+
+{% if forgejo_queue.length | default('') | string | length > 0 %}
+LENGTH = {{ forgejo_queue.length }}
+{% endif %}
+
+{% if forgejo_queue.batch_length | default('') | string | length > 0 %}
+BATCH_LENGTH = {{ forgejo_queue.batch_length }}
+{% endif %}
+
+{% if forgejo_queue.conn_str | default('') | string | length > 0 %}
+CONN_STR = {{ forgejo_queue.conn_str }}
+{% endif %}
+
+{% if forgejo_queue.queue_name | default('') | string | length > 0 %}
+QUEUE_NAME = {{ forgejo_queue.queue_name }}
+{% endif %}
+
+{% if forgejo_queue.set_name | default('') | string | length > 0 %}
+SET_NAME = {{ forgejo_queue.set_name }}
+{% endif %}
+
+{% if forgejo_queue.max_workers | default('') | string | length > 0 %}
+MAX_WORKERS = {{ forgejo_queue.max_workers }}
+{% endif %}
+{% endif %}

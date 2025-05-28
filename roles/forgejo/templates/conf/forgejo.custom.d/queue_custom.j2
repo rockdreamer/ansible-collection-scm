@@ -1,0 +1,17 @@
+{#
+Each element under queue, except queue.issue_indexer can have the following keys
+overriding the default values in [queue]:
+TYPE, DATADIR, LENGTH, BATCH_LENGTH, CONN_STR, QUEUE_NAME, SET_NAME, MAX_WORKERS
+#}
+;; From ansible jinja template queue_custom.j2
+
+{% if forgejo_queue is defined and forgejo_queue is mapping and forgejo_queue | count > 0 %}
+  {% for k, v in forgejo_queue.items() %}
+    {% if k != "issue_indexer" and v is mapping and v | count > 0 %}
+[queue.{{ k }}]
+      {% for k2, v2 in v.items() %}
+{{ k | upper }} = {{ v2 }}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+{% endif %}

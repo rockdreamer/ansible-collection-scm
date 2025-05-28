@@ -1,14 +1,27 @@
+;; Ansible jinja template task.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_task is defined and
+    forgejo_task | count > 0 %}
 
 [task]
-  {% if forgejo_task.queue_type | default('') | string | length > 0 and
-        forgejo_task.queue_type in ["channel", "redis"] %}
+
+
+;; QUEUE_TYPE is deprecated: Use 'forgejo_queue.task.type' instead
+
+{% if forgejo_task.queue_type | default('') | string | length > 0 %}
 QUEUE_TYPE = {{ forgejo_task.queue_type }}
-    {% if forgejo_task.queue_type == "channel" and
-          forgejo_task.queue_length | default('') | string | length > 0 %}
+{% endif %}
+
+;; QUEUE_LENGTH is deprecated: Use 'forgejo_queue.task.length' instead
+
+{% if forgejo_task.queue_length | default('') | string | length > 0 %}
 QUEUE_LENGTH = {{ forgejo_task.queue_length }}
-    {% endif %}
-    {% if forgejo_task.queue_type == "redis" and
-          forgejo_task.queue_conn_str | default('') | string | length > 0 %}
+{% endif %}
+
+;; QUEUE_CONN_STR is deprecated: Use 'forgejo_queue.task.conn_str' instead
+
+{% if forgejo_task.queue_conn_str | default('') | string | length > 0 %}
 QUEUE_CONN_STR = {{ forgejo_task.queue_conn_str }}
-    {% endif %}
-  {% endif %}
+{% endif %}
+{% endif %}

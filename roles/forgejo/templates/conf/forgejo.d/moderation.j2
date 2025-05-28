@@ -1,0 +1,13 @@
+;; Ansible jinja template moderation.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_moderation is defined and forgejo_moderation | count > 0 and
+    forgejo_moderation.enabled | default('false') | bool %}
+
+[moderation]
+
+
+{% if forgejo_moderation.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_moderation.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+{% endif %}

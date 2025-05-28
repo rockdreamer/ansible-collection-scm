@@ -1,0 +1,9 @@
+;; From ansible jinja template gitconfig.j2
+
+  {% if forgejo_git.config is defined and forgejo_git.config is mapping
+      and forgejo_git.config | count > 0 %}
+[git.config]
+    {% for k, v in forgejo_git.config.items() %}
+{{ k }} = {{ v }}
+    {% endfor %}
+  {% endif %}

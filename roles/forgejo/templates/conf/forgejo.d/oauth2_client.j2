@@ -1,22 +1,33 @@
+;; Ansible jinja template oauth2_client.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_oauth2_client is defined and
+    forgejo_oauth2_client | count > 0 %}
 
 [oauth2_client]
-  {% if forgejo_oauth2_client.register_email_confirm | default('') | string | length > 0 %}
+
+
+{% if forgejo_oauth2_client.register_email_confirm | default('') | string | length > 0 %}
 REGISTER_EMAIL_CONFIRM = {{ forgejo_oauth2_client.register_email_confirm }}
-  {% endif %}
-  {% if forgejo_oauth2_client.openid_connect_scopes | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_oauth2_client.openid_connect_scopes | default('') | string | length > 0 %}
 OPENID_CONNECT_SCOPES = {{ forgejo_oauth2_client.openid_connect_scopes }}
-  {% endif %}
-  {% if forgejo_oauth2_client.enable_auto_registration | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_oauth2_client.enable_auto_registration | default('') | string | length > 0 %}
 ENABLE_AUTO_REGISTRATION = {{ forgejo_oauth2_client.enable_auto_registration | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
-  {% if forgejo_oauth2_client.username | default('') | string | length > 0 and
-        forgejo_oauth2_client.username in ["userid", "nickname", "email"] %}
+{% endif %}
+
+{% if forgejo_oauth2_client.username | default('') | string | length > 0 %}
 USERNAME = {{ forgejo_oauth2_client.username }}
-  {% endif %}
-  {% if forgejo_oauth2_client.update_avatar | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_oauth2_client.update_avatar | default('') | string | length > 0 %}
 UPDATE_AVATAR = {{ forgejo_oauth2_client.update_avatar | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
-  {% if forgejo_oauth2_client.account_linking | default('') | string | length > 0 and
-        forgejo_oauth2_client.account_linking in ["disabled", "login", "auto"] %}
+{% endif %}
+
+{% if forgejo_oauth2_client.account_linking | default('') | string | length > 0 %}
 ACCOUNT_LINKING = {{ forgejo_oauth2_client.account_linking }}
-  {% endif %}
+{% endif %}
+{% endif %}

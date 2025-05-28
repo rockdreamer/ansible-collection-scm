@@ -1,0 +1,9 @@
+;; From ansible jinja template highlight.j2
+
+  {% if forgejo_highlight.mapping is defined and forgejo_highlight is mapping
+      and forgejo_highlight | count > 0 %}
+[highlight.mapping]
+    {% for k, v in forgejo_highlight.items() %}
+{{ k }} = {{ v }}
+    {% endfor %}
+  {% endif %}

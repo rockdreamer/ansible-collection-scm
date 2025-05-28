@@ -1,0 +1,21 @@
+;; Ansible jinja template repo-archive.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_repo_archive is defined and
+    forgejo_repo_archive | count > 0 %}
+
+[repo-archive]
+
+
+{% if forgejo_repo_archive.storage_type | default('') | string | length > 0 %}
+STORAGE_TYPE = {{ forgejo_repo_archive.storage_type }}
+{% endif %}
+
+{% if forgejo_repo_archive.path | default('') | string | length > 0 %}
+PATH = {{ forgejo_repo_archive.path }}
+{% endif %}
+
+{% if forgejo_repo_archive.minio_base_path | default('') | string | length > 0 %}
+MINIO_BASE_PATH = {{ forgejo_repo_archive.minio_base_path }}
+{% endif %}
+{% endif %}

@@ -1,14 +1,27 @@
+;; Ansible jinja template openid.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_openid is defined and
+    forgejo_openid | count > 0 %}
 
 [openid]
-  {% if forgejo_openid.enable_openid_signin | default('') | string | length > 0 %}
+
+
+{% if forgejo_openid.enable_openid_signin | default('') | string | length > 0 %}
 ENABLE_OPENID_SIGNIN = {{ forgejo_openid.enable_openid_signin | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
-  {% if forgejo_openid.enable_openid_signup | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_openid.enable_openid_signup | default('') | string | length > 0 %}
 ENABLE_OPENID_SIGNUP = {{ forgejo_openid.enable_openid_signup | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
-  {% if forgejo_openid.whitelisted_uris | count > 0 %}
+{% endif %}
+
+{% if forgejo_openid.whitelisted_uris is defined and
+forgejo_openid.whitelisted_uris | count > 0 %}
 WHITELISTED_URIS = {{ forgejo_openid.whitelisted_uris | join(' ') }}
-  {% endif %}
-  {% if forgejo_openid.blacklisted_uris | count > 0 %}
+{% endif %}
+
+{% if forgejo_openid.blacklisted_uris is defined and
+forgejo_openid.blacklisted_uris | count > 0 %}
 BLACKLISTED_URIS = {{ forgejo_openid.blacklisted_uris | join(' ') }}
-  {% endif %}
+{% endif %}
+{% endif %}

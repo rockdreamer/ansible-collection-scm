@@ -1,36 +1,577 @@
+;; Ansible jinja template cron.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_cron is defined and
+    forgejo_cron | count > 0 %}
 
 [cron]
-ENABLED = {{ forgejo_cron.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% if forgejo_cron.run_at_start | default('') | string | length > 0 %}
-RUN_AT_START = {{ forgejo_cron.run_at_start | bool | ternary('true', 'false') }}
-  {% endif %}
-  {% set cron_jobs = [
-      "archive_cleanup", "update_mirrors", "repo_health_check", "check_repo_stats",
-      "update_migration_poster_id", "sync_external_users", "cleanup_hook_task_table",
-      "cleanup_packages", "delete_inactive_accounts", "delete_repo_archives",
-      "git_gc_repos", "resync_all_sshkeys", "resync_all_hooks", "reinit_missing_repos",
-      "delete_missing_repos", "delete_generated_repository_avatars", "delete_old_actions",
-      "update_checker", "delete_old_system_notices", "gc_lfs"
-      ] %}
-  {% set cron_parameters = [
-      "run_at_start", "notice_on_success", "schedule", "older_than",
-      "pull_limit", "push_limit", "update_existing", "cleanup_type", "number_to_keep",
-      "http_endpoint"
-      ] %}
-  {% for job in cron_jobs %}
-    {% set d = forgejo_cron.get(job) %}
-    {% if d and d.enabled | default('false') | bool %}
 
-      {% set _ = d.pop("enabled") %}
-      {% if d.comment | default('') | string | length > 0 %}
-; {{ d.comment }}
-        {% set _ = d.pop("comment") %}
-      {% endif %}
-[cron.{{ job }}]
-      {% for k, v in d.items() %}
-        {% if v | default('') | string | length > 0 %}
-{{ k | upper }} = {{ v | bodsch.core.config_bool(true_as='true', false_as='false') }}
-        {% endif %}
-      {% endfor %}
-    {% endif %}
-  {% endfor %}
+
+{% if forgejo_cron.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_cron.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.run_at_start | default('') | string | length > 0 %}
+RUN_AT_START = {{ forgejo_cron.run_at_start | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+{% endif %}
+{% if forgejo_cron.archive_cleanup is defined and
+    forgejo_cron.archive_cleanup | count > 0 %}
+
+[cron.archive_cleanup]
+
+
+{% if forgejo_cron.archive_cleanup.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_cron.archive_cleanup.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.archive_cleanup.run_at_start | default('') | string | length > 0 %}
+RUN_AT_START = {{ forgejo_cron.archive_cleanup.run_at_start | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.archive_cleanup.notice_on_success | default('') | string | length > 0 %}
+NOTICE_ON_SUCCESS = {{ forgejo_cron.archive_cleanup.notice_on_success | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.archive_cleanup.schedule | default('') | string | length > 0 %}
+SCHEDULE = {{ forgejo_cron.archive_cleanup.schedule }}
+{% endif %}
+
+{% if forgejo_cron.archive_cleanup.older_than | default('') | string | length > 0 %}
+OLDER_THAN = {{ forgejo_cron.archive_cleanup.older_than }}
+{% endif %}
+{% endif %}
+{% if forgejo_cron.update_mirrors is defined and
+    forgejo_cron.update_mirrors | count > 0 %}
+
+[cron.update_mirrors]
+
+
+{% if forgejo_cron.update_mirrors.schedule | default('') | string | length > 0 %}
+SCHEDULE = {{ forgejo_cron.update_mirrors.schedule }}
+{% endif %}
+
+{% if forgejo_cron.update_mirrors.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_cron.update_mirrors.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.update_mirrors.run_at_start | default('') | string | length > 0 %}
+RUN_AT_START = {{ forgejo_cron.update_mirrors.run_at_start | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.update_mirrors.notice_on_success | default('') | string | length > 0 %}
+NOTICE_ON_SUCCESS = {{ forgejo_cron.update_mirrors.notice_on_success | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.update_mirrors.pull_limit | default('') | string | length > 0 %}
+PULL_LIMIT = {{ forgejo_cron.update_mirrors.pull_limit }}
+{% endif %}
+
+{% if forgejo_cron.update_mirrors.push_limit | default('') | string | length > 0 %}
+PUSH_LIMIT = {{ forgejo_cron.update_mirrors.push_limit }}
+{% endif %}
+{% endif %}
+{% if forgejo_cron.repo_health_check is defined and
+    forgejo_cron.repo_health_check | count > 0 %}
+
+[cron.repo_health_check]
+
+
+{% if forgejo_cron.repo_health_check.schedule | default('') | string | length > 0 %}
+SCHEDULE = {{ forgejo_cron.repo_health_check.schedule }}
+{% endif %}
+
+{% if forgejo_cron.repo_health_check.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_cron.repo_health_check.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.repo_health_check.run_at_start | default('') | string | length > 0 %}
+RUN_AT_START = {{ forgejo_cron.repo_health_check.run_at_start | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.repo_health_check.notice_on_success | default('') | string | length > 0 %}
+NOTICE_ON_SUCCESS = {{ forgejo_cron.repo_health_check.notice_on_success | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.repo_health_check.timeout | default('') | string | length > 0 %}
+TIMEOUT = {{ forgejo_cron.repo_health_check.timeout }}
+{% endif %}
+
+{% if forgejo_cron.repo_health_check.args | default('') | string | length > 0 %}
+ARGS = {{ forgejo_cron.repo_health_check.args }}
+{% endif %}
+{% endif %}
+{% if forgejo_cron.check_repo_stats is defined and
+    forgejo_cron.check_repo_stats | count > 0 %}
+
+[cron.check_repo_stats]
+
+
+{% if forgejo_cron.check_repo_stats.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_cron.check_repo_stats.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.check_repo_stats.run_at_start | default('') | string | length > 0 %}
+RUN_AT_START = {{ forgejo_cron.check_repo_stats.run_at_start | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.check_repo_stats.notice_on_success | default('') | string | length > 0 %}
+NOTICE_ON_SUCCESS = {{ forgejo_cron.check_repo_stats.notice_on_success | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.check_repo_stats.schedule | default('') | string | length > 0 %}
+SCHEDULE = {{ forgejo_cron.check_repo_stats.schedule }}
+{% endif %}
+{% endif %}
+{% if forgejo_cron.update_migration_poster_id is defined and
+    forgejo_cron.update_migration_poster_id | count > 0 %}
+
+[cron.update_migration_poster_id]
+
+
+{% if forgejo_cron.update_migration_poster_id.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_cron.update_migration_poster_id.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.update_migration_poster_id.run_at_start | default('') | string | length > 0 %}
+RUN_AT_START = {{ forgejo_cron.update_migration_poster_id.run_at_start | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.update_migration_poster_id.notice_on_success | default('') | string | length > 0 %}
+NOTICE_ON_SUCCESS = {{ forgejo_cron.update_migration_poster_id.notice_on_success | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.update_migration_poster_id.schedule | default('') | string | length > 0 %}
+SCHEDULE = {{ forgejo_cron.update_migration_poster_id.schedule }}
+{% endif %}
+{% endif %}
+{% if forgejo_cron.sync_external_users is defined and
+    forgejo_cron.sync_external_users | count > 0 %}
+
+[cron.sync_external_users]
+
+
+{% if forgejo_cron.sync_external_users.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_cron.sync_external_users.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.sync_external_users.run_at_start | default('') | string | length > 0 %}
+RUN_AT_START = {{ forgejo_cron.sync_external_users.run_at_start | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.sync_external_users.notice_on_success | default('') | string | length > 0 %}
+NOTICE_ON_SUCCESS = {{ forgejo_cron.sync_external_users.notice_on_success | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.sync_external_users.schedule | default('') | string | length > 0 %}
+SCHEDULE = {{ forgejo_cron.sync_external_users.schedule }}
+{% endif %}
+
+{% if forgejo_cron.sync_external_users.update_existing | default('') | string | length > 0 %}
+UPDATE_EXISTING = {{ forgejo_cron.sync_external_users.update_existing | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+{% endif %}
+{% if forgejo_cron.cleanup_actions is defined and
+    forgejo_cron.cleanup_actions | count > 0 %}
+
+[cron.cleanup_actions]
+
+
+{% if forgejo_cron.cleanup_actions.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_cron.cleanup_actions.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.cleanup_actions.run_at_start | default('') | string | length > 0 %}
+RUN_AT_START = {{ forgejo_cron.cleanup_actions.run_at_start | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.cleanup_actions.schedule | default('') | string | length > 0 %}
+SCHEDULE = {{ forgejo_cron.cleanup_actions.schedule }}
+{% endif %}
+{% endif %}
+{% if forgejo_cron.deleted_branches_cleanup is defined and
+    forgejo_cron.deleted_branches_cleanup | count > 0 %}
+
+[cron.deleted_branches_cleanup]
+
+
+{% if forgejo_cron.deleted_branches_cleanup.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_cron.deleted_branches_cleanup.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.deleted_branches_cleanup.run_at_start | default('') | string | length > 0 %}
+RUN_AT_START = {{ forgejo_cron.deleted_branches_cleanup.run_at_start | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.deleted_branches_cleanup.notice_on_success | default('') | string | length > 0 %}
+NOTICE_ON_SUCCESS = {{ forgejo_cron.deleted_branches_cleanup.notice_on_success | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.deleted_branches_cleanup.schedule | default('') | string | length > 0 %}
+SCHEDULE = {{ forgejo_cron.deleted_branches_cleanup.schedule }}
+{% endif %}
+
+{% if forgejo_cron.deleted_branches_cleanup.older_than | default('') | string | length > 0 %}
+OLDER_THAN = {{ forgejo_cron.deleted_branches_cleanup.older_than }}
+{% endif %}
+{% endif %}
+{% if forgejo_cron.cleanup_hook_task_table is defined and
+    forgejo_cron.cleanup_hook_task_table | count > 0 %}
+
+[cron.cleanup_hook_task_table]
+
+
+{% if forgejo_cron.cleanup_hook_task_table.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_cron.cleanup_hook_task_table.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.cleanup_hook_task_table.run_at_start | default('') | string | length > 0 %}
+RUN_AT_START = {{ forgejo_cron.cleanup_hook_task_table.run_at_start | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.cleanup_hook_task_table.schedule | default('') | string | length > 0 %}
+SCHEDULE = {{ forgejo_cron.cleanup_hook_task_table.schedule }}
+{% endif %}
+
+{% if forgejo_cron.cleanup_hook_task_table.cleanup_type | default('') | string | length > 0 %}
+CLEANUP_TYPE = {{ forgejo_cron.cleanup_hook_task_table.cleanup_type }}
+{% endif %}
+
+{% if forgejo_cron.cleanup_hook_task_table.older_than | default('') | string | length > 0 %}
+OLDER_THAN = {{ forgejo_cron.cleanup_hook_task_table.older_than }}
+{% endif %}
+
+{% if forgejo_cron.cleanup_hook_task_table.number_to_keep | default('') | string | length > 0 %}
+NUMBER_TO_KEEP = {{ forgejo_cron.cleanup_hook_task_table.number_to_keep }}
+{% endif %}
+{% endif %}
+{% if forgejo_cron.cleanup_packages is defined and
+    forgejo_cron.cleanup_packages | count > 0 %}
+
+[cron.cleanup_packages]
+
+
+{% if forgejo_cron.cleanup_packages.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_cron.cleanup_packages.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.cleanup_packages.run_at_start | default('') | string | length > 0 %}
+RUN_AT_START = {{ forgejo_cron.cleanup_packages.run_at_start | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.cleanup_packages.notice_on_success | default('') | string | length > 0 %}
+NOTICE_ON_SUCCESS = {{ forgejo_cron.cleanup_packages.notice_on_success | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.cleanup_packages.schedule | default('') | string | length > 0 %}
+SCHEDULE = {{ forgejo_cron.cleanup_packages.schedule }}
+{% endif %}
+
+{% if forgejo_cron.cleanup_packages.older_than | default('') | string | length > 0 %}
+OLDER_THAN = {{ forgejo_cron.cleanup_packages.older_than }}
+{% endif %}
+{% endif %}
+{% if forgejo_cron.delete_inactive_accounts is defined and
+    forgejo_cron.delete_inactive_accounts | count > 0 %}
+
+[cron.delete_inactive_accounts]
+
+
+{% if forgejo_cron.delete_inactive_accounts.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_cron.delete_inactive_accounts.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.delete_inactive_accounts.run_at_start | default('') | string | length > 0 %}
+RUN_AT_START = {{ forgejo_cron.delete_inactive_accounts.run_at_start | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.delete_inactive_accounts.notice_on_success | default('') | string | length > 0 %}
+NOTICE_ON_SUCCESS = {{ forgejo_cron.delete_inactive_accounts.notice_on_success | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.delete_inactive_accounts.schedule | default('') | string | length > 0 %}
+SCHEDULE = {{ forgejo_cron.delete_inactive_accounts.schedule }}
+{% endif %}
+
+{% if forgejo_cron.delete_inactive_accounts.older_than | default('') | string | length > 0 %}
+OLDER_THAN = {{ forgejo_cron.delete_inactive_accounts.older_than }}
+{% endif %}
+{% endif %}
+{% if forgejo_cron.delete_repo_archives is defined and
+    forgejo_cron.delete_repo_archives | count > 0 %}
+
+[cron.delete_repo_archives]
+
+
+{% if forgejo_cron.delete_repo_archives.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_cron.delete_repo_archives.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.delete_repo_archives.run_at_start | default('') | string | length > 0 %}
+RUN_AT_START = {{ forgejo_cron.delete_repo_archives.run_at_start | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.delete_repo_archives.notice_on_success | default('') | string | length > 0 %}
+NOTICE_ON_SUCCESS = {{ forgejo_cron.delete_repo_archives.notice_on_success | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.delete_repo_archives.schedule | default('') | string | length > 0 %}
+SCHEDULE = {{ forgejo_cron.delete_repo_archives.schedule }}
+{% endif %}
+{% endif %}
+{% if forgejo_cron.git_gc_repos is defined and
+    forgejo_cron.git_gc_repos | count > 0 %}
+
+[cron.git_gc_repos]
+
+
+{% if forgejo_cron.git_gc_repos.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_cron.git_gc_repos.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.git_gc_repos.run_at_start | default('') | string | length > 0 %}
+RUN_AT_START = {{ forgejo_cron.git_gc_repos.run_at_start | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.git_gc_repos.notice_on_success | default('') | string | length > 0 %}
+NOTICE_ON_SUCCESS = {{ forgejo_cron.git_gc_repos.notice_on_success | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.git_gc_repos.schedule | default('') | string | length > 0 %}
+SCHEDULE = {{ forgejo_cron.git_gc_repos.schedule }}
+{% endif %}
+
+{% if forgejo_cron.git_gc_repos.timeout | default('') | string | length > 0 %}
+TIMEOUT = {{ forgejo_cron.git_gc_repos.timeout }}
+{% endif %}
+
+{% if forgejo_cron.git_gc_repos.args | default('') | string | length > 0 %}
+ARGS = {{ forgejo_cron.git_gc_repos.args }}
+{% endif %}
+{% endif %}
+{% if forgejo_cron.resync_all_sshkeys is defined and
+    forgejo_cron.resync_all_sshkeys | count > 0 %}
+
+[cron.resync_all_sshkeys]
+
+
+{% if forgejo_cron.resync_all_sshkeys.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_cron.resync_all_sshkeys.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.resync_all_sshkeys.run_at_start | default('') | string | length > 0 %}
+RUN_AT_START = {{ forgejo_cron.resync_all_sshkeys.run_at_start | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.resync_all_sshkeys.notice_on_success | default('') | string | length > 0 %}
+NOTICE_ON_SUCCESS = {{ forgejo_cron.resync_all_sshkeys.notice_on_success | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.resync_all_sshkeys.schedule | default('') | string | length > 0 %}
+SCHEDULE = {{ forgejo_cron.resync_all_sshkeys.schedule }}
+{% endif %}
+{% endif %}
+{% if forgejo_cron.resync_all_hooks is defined and
+    forgejo_cron.resync_all_hooks | count > 0 %}
+
+[cron.resync_all_hooks]
+
+
+{% if forgejo_cron.resync_all_hooks.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_cron.resync_all_hooks.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.resync_all_hooks.run_at_start | default('') | string | length > 0 %}
+RUN_AT_START = {{ forgejo_cron.resync_all_hooks.run_at_start | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.resync_all_hooks.notice_on_success | default('') | string | length > 0 %}
+NOTICE_ON_SUCCESS = {{ forgejo_cron.resync_all_hooks.notice_on_success | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.resync_all_hooks.schedule | default('') | string | length > 0 %}
+SCHEDULE = {{ forgejo_cron.resync_all_hooks.schedule }}
+{% endif %}
+{% endif %}
+{% if forgejo_cron.reinit_missing_repos is defined and
+    forgejo_cron.reinit_missing_repos | count > 0 %}
+
+[cron.reinit_missing_repos]
+
+
+{% if forgejo_cron.reinit_missing_repos.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_cron.reinit_missing_repos.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.reinit_missing_repos.run_at_start | default('') | string | length > 0 %}
+RUN_AT_START = {{ forgejo_cron.reinit_missing_repos.run_at_start | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.reinit_missing_repos.notice_on_success | default('') | string | length > 0 %}
+NOTICE_ON_SUCCESS = {{ forgejo_cron.reinit_missing_repos.notice_on_success | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.reinit_missing_repos.schedule | default('') | string | length > 0 %}
+SCHEDULE = {{ forgejo_cron.reinit_missing_repos.schedule }}
+{% endif %}
+{% endif %}
+{% if forgejo_cron.delete_missing_repos is defined and
+    forgejo_cron.delete_missing_repos | count > 0 %}
+
+[cron.delete_missing_repos]
+
+
+{% if forgejo_cron.delete_missing_repos.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_cron.delete_missing_repos.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.delete_missing_repos.run_at_start | default('') | string | length > 0 %}
+RUN_AT_START = {{ forgejo_cron.delete_missing_repos.run_at_start | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.delete_missing_repos.notice_on_success | default('') | string | length > 0 %}
+NOTICE_ON_SUCCESS = {{ forgejo_cron.delete_missing_repos.notice_on_success | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.delete_missing_repos.schedule | default('') | string | length > 0 %}
+SCHEDULE = {{ forgejo_cron.delete_missing_repos.schedule }}
+{% endif %}
+{% endif %}
+{% if forgejo_cron.delete_generated_repository_avatars is defined and
+    forgejo_cron.delete_generated_repository_avatars | count > 0 %}
+
+[cron.delete_generated_repository_avatars]
+
+
+{% if forgejo_cron.delete_generated_repository_avatars.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_cron.delete_generated_repository_avatars.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.delete_generated_repository_avatars.run_at_start | default('') | string | length > 0 %}
+RUN_AT_START = {{ forgejo_cron.delete_generated_repository_avatars.run_at_start | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.delete_generated_repository_avatars.notice_on_success | default('') | string | length > 0 %}
+NOTICE_ON_SUCCESS = {{ forgejo_cron.delete_generated_repository_avatars.notice_on_success | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.delete_generated_repository_avatars.schedule | default('') | string | length > 0 %}
+SCHEDULE = {{ forgejo_cron.delete_generated_repository_avatars.schedule }}
+{% endif %}
+{% endif %}
+{% if forgejo_cron.delete_old_actions is defined and
+    forgejo_cron.delete_old_actions | count > 0 %}
+
+[cron.delete_old_actions]
+
+
+{% if forgejo_cron.delete_old_actions.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_cron.delete_old_actions.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.delete_old_actions.run_at_start | default('') | string | length > 0 %}
+RUN_AT_START = {{ forgejo_cron.delete_old_actions.run_at_start | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.delete_old_actions.notice_on_success | default('') | string | length > 0 %}
+NOTICE_ON_SUCCESS = {{ forgejo_cron.delete_old_actions.notice_on_success | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.delete_old_actions.schedule | default('') | string | length > 0 %}
+SCHEDULE = {{ forgejo_cron.delete_old_actions.schedule }}
+{% endif %}
+
+{% if forgejo_cron.delete_old_actions.older_than | default('') | string | length > 0 %}
+OLDER_THAN = {{ forgejo_cron.delete_old_actions.older_than }}
+{% endif %}
+{% endif %}
+{% if forgejo_cron.update_checker is defined and
+    forgejo_cron.update_checker | count > 0 %}
+
+[cron.update_checker]
+
+
+{% if forgejo_cron.update_checker.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_cron.update_checker.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.update_checker.run_at_start | default('') | string | length > 0 %}
+RUN_AT_START = {{ forgejo_cron.update_checker.run_at_start | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.update_checker.enable_success_notice | default('') | string | length > 0 %}
+ENABLE_SUCCESS_NOTICE = {{ forgejo_cron.update_checker.enable_success_notice | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.update_checker.schedule | default('') | string | length > 0 %}
+SCHEDULE = {{ forgejo_cron.update_checker.schedule }}
+{% endif %}
+
+{% if forgejo_cron.update_checker.http_endpoint | default('') | string | length > 0 %}
+HTTP_ENDPOINT = {{ forgejo_cron.update_checker.http_endpoint }}
+{% endif %}
+
+{% if forgejo_cron.update_checker.domain_endpoint | default('') | string | length > 0 %}
+DOMAIN_ENDPOINT = {{ forgejo_cron.update_checker.domain_endpoint }}
+{% endif %}
+{% endif %}
+{% if forgejo_cron.delete_old_system_notices is defined and
+    forgejo_cron.delete_old_system_notices | count > 0 %}
+
+[cron.delete_old_system_notices]
+
+
+{% if forgejo_cron.delete_old_system_notices.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_cron.delete_old_system_notices.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.delete_old_system_notices.run_at_start | default('') | string | length > 0 %}
+RUN_AT_START = {{ forgejo_cron.delete_old_system_notices.run_at_start | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.delete_old_system_notices.no_success_notice | default('') | string | length > 0 %}
+NO_SUCCESS_NOTICE = {{ forgejo_cron.delete_old_system_notices.no_success_notice | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.delete_old_system_notices.schedule | default('') | string | length > 0 %}
+SCHEDULE = {{ forgejo_cron.delete_old_system_notices.schedule }}
+{% endif %}
+
+{% if forgejo_cron.delete_old_system_notices.older_than | default('') | string | length > 0 %}
+OLDER_THAN = {{ forgejo_cron.delete_old_system_notices.older_than }}
+{% endif %}
+{% endif %}
+{% if forgejo_cron.gc_lfs is defined and
+    forgejo_cron.gc_lfs | count > 0 %}
+
+[cron.gc_lfs]
+
+
+{% if forgejo_cron.gc_lfs.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_cron.gc_lfs.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.gc_lfs.run_at_start | default('') | string | length > 0 %}
+RUN_AT_START = {{ forgejo_cron.gc_lfs.run_at_start | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_cron.gc_lfs.schedule | default('') | string | length > 0 %}
+SCHEDULE = {{ forgejo_cron.gc_lfs.schedule }}
+{% endif %}
+
+{% if forgejo_cron.gc_lfs.older_than | default('') | string | length > 0 %}
+OLDER_THAN = {{ forgejo_cron.gc_lfs.older_than }}
+{% endif %}
+
+{% if forgejo_cron.gc_lfs.last_updated_more_than_ago | default('') | string | length > 0 %}
+LAST_UPDATED_MORE_THAN_AGO = {{ forgejo_cron.gc_lfs.last_updated_more_than_ago }}
+{% endif %}
+
+{% if forgejo_cron.gc_lfs.number_to_check_per_repo | default('') | string | length > 0 %}
+NUMBER_TO_CHECK_PER_REPO = {{ forgejo_cron.gc_lfs.number_to_check_per_repo }}
+{% endif %}
+
+{% if forgejo_cron.gc_lfs.proportion_to_check_per_repo | default('') | string | length > 0 %}
+PROPORTION_TO_CHECK_PER_REPO = {{ forgejo_cron.gc_lfs.proportion_to_check_per_repo }}
+{% endif %}
+{% endif %}

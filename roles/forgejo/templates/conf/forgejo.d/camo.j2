@@ -1,26 +1,25 @@
+;; Ansible jinja template camo.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_camo is defined and forgejo_camo | count > 0 and
+    forgejo_camo.enabled | default('false') | bool %}
 
 [camo]
-  {#
-    validate first:
-    server_url **is required** if camo is enabled.
-    hmac_key **is required** if camo is enabled.
-  #}
-  {% set forgejo_camo_enabled = forgejo_camo.enabled %}
-  {% if forgejo_camo.server_url | default('') | string | length == 0 %}
-;; server_url **is required** if camo is enabled.
-    {% set forgejo_camo_enabled = false %}
-  {% endif %}
-  {% if forgejo_camo.hmac_key | default('') | string | length == 0 %}
-;; hmac_key **is required** if camo is enabled.
-    {% set forgejo_camo_enabled = false %}
-  {% endif %}
-ENABLED = {{ forgejo_camo_enabled | bool | ternary('true', 'false') }}
-  {% if forgejo_camo.server_url | default('') | string | length > 0 %}
+
+
+{% if forgejo_camo.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_camo.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_camo.server_url | default('') | string | length > 0 %}
 SERVER_URL = {{ forgejo_camo.server_url }}
-  {% endif %}
-  {% if forgejo_camo.hmac_key | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_camo.hmac_key | default('') | string | length > 0 %}
 HMAC_KEY = {{ forgejo_camo.hmac_key }}
-  {% endif %}
-  {% if forgejo_camo.allways | default('') | string | length > 0 %}
-ALLWAYS = {{ forgejo_camo.allways | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
+{% endif %}
+
+{% if forgejo_camo.always | default('') | string | length > 0 %}
+ALWAYS = {{ forgejo_camo.always | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+{% endif %}

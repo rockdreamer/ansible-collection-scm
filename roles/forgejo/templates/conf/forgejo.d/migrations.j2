@@ -1,17 +1,35 @@
+;; Ansible jinja template migrations.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_migrations is defined and
+    forgejo_migrations | count > 0 %}
 
 [migrations]
-  {% if forgejo_migrations.max_attempts | default('') | string | length > 0 %}
+
+
+{% if forgejo_migrations.max_attempts | default('') | string | length > 0 %}
 MAX_ATTEMPTS = {{ forgejo_migrations.max_attempts }}
-  {% endif %}
-  {% if forgejo_migrations.retry_backoff | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_migrations.retry_backoff | default('') | string | length > 0 %}
 RETRY_BACKOFF = {{ forgejo_migrations.retry_backoff }}
-  {% endif %}
-  {% if forgejo_migrations.allowed_domains | count > 0 %}
+{% endif %}
+
+{% if forgejo_migrations.allowed_domains is defined and
+forgejo_migrations.allowed_domains | count > 0 %}
 ALLOWED_DOMAINS = {{ forgejo_migrations.allowed_domains | join(', ') }}
-  {% endif %}
-  {% if forgejo_migrations.blocked_domains | count > 0 %}
+{% endif %}
+
+{% if forgejo_migrations.blocked_domains is defined and
+forgejo_migrations.blocked_domains | count > 0 %}
 BLOCKED_DOMAINS = {{ forgejo_migrations.blocked_domains | join(', ') }}
-  {% endif %}
-  {% if forgejo_migrations.allow_localnetworks | default('') | string | length > 0 %}
-ALLOW_LOCALNETWORKS = {{ forgejo_migrations.allow_localnetworks | default('false') | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
+{% endif %}
+
+{% if forgejo_migrations.allow_localnetworks | default('') | string | length > 0 %}
+ALLOW_LOCALNETWORKS = {{ forgejo_migrations.allow_localnetworks | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_migrations.skip_tls_verify | default('') | string | length > 0 %}
+SKIP_TLS_VERIFY = {{ forgejo_migrations.skip_tls_verify | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+{% endif %}

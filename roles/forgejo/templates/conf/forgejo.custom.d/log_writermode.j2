@@ -1,0 +1,23 @@
+{#
+Each sublogger under logger.* can have more than one dynamically defined mode.
+
+Each mode then can be set up individually using the following keys.
+;MODE=console/file/conn/...
+;LEVEL=
+;FLAGS = stdflags or journald
+;EXPRESSION =
+;PREFIX =
+;COLORIZE = false
+#}
+;; From ansible jinja template log_writermode.j2
+
+{% set ignore_log_sections = ["console", "file", "conn", "logger", "smtp"] %}
+{% for k, v in forgejo_log.items() %}
+    {% if k not in ignore_log_sections and v is mapping and v | count > 0 %}
+[log.{{ k }}]
+        {% for k2, v2 in v.items() %}
+{{ k | upper }} = {{ v2 }}
+        {% endfor %}
+    {% endif %}
+{% endfor %}
+

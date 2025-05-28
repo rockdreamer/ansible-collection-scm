@@ -1,28 +1,47 @@
+;; Ansible jinja template cors.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_cors is defined and forgejo_cors | count > 0 and
+    forgejo_cors.enabled | default('false') | bool %}
 
 [cors]
+
+
+{% if forgejo_cors.enabled | default('') | string | length > 0 %}
 ENABLED = {{ forgejo_cors.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% if forgejo_cors.scheme | default('') | string | length > 0 %}
-SCHEME = {{ forgejo_cors.scheme }}
-  {% endif %}
-  {% if forgejo_cors.allow_domain | count > 0 %}
-;; list of requesting domains that are allowed
+{% endif %}
+
+{% if forgejo_cors.allow_domain is defined and
+forgejo_cors.allow_domain | count > 0 %}
 ALLOW_DOMAIN = {{ forgejo_cors.allow_domain | join(', ') }}
-  {% endif %}
-  {% if forgejo_cors.allow_subdomain | default('') | string | length > 0 %}
-ALLOW_SUBDOMAIN = {{ forgejo_cors.allow_subdomain | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
-  {% if forgejo_cors.methods | count > 0 %}
-METHODS =  {{ forgejo_cors.methods | join(', ') }}
-  {% endif %}
-  {% if forgejo_cors.max_age | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_cors.methods is defined and
+forgejo_cors.methods | count > 0 %}
+METHODS = {{ forgejo_cors.methods | join(', ') }}
+{% endif %}
+
+{% if forgejo_cors.max_age | default('') | string | length > 0 %}
 MAX_AGE = {{ forgejo_cors.max_age }}
-  {% endif %}
-  {% if forgejo_cors.allow_credentials | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_cors.allow_credentials | default('') | string | length > 0 %}
 ALLOW_CREDENTIALS = {{ forgejo_cors.allow_credentials | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
-  {% if forgejo_cors.allow_credentials | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_cors.headers is defined and
+forgejo_cors.headers | count > 0 %}
 HEADERS = {{ forgejo_cors.headers | join(', ') }}
-  {% endif %}
-  {% if forgejo_cors.x_frame_options | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_cors.x_frame_options is defined and
+forgejo_cors.x_frame_options | count > 0 %}
 X_FRAME_OPTIONS = {{ forgejo_cors.x_frame_options | join(', ') }}
-  {% endif %}
+{% endif %}
+
+;; ALLOW_SUBDOMAIN is deprecated: Not documented
+
+{% if forgejo_cors.allow_subdomain | default('') | string | length > 0 %}
+ALLOW_SUBDOMAIN = {{ forgejo_cors.allow_subdomain | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+{% endif %}

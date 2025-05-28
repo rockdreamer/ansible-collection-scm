@@ -1,17 +1,35 @@
+;; Ansible jinja template other.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_other is defined and
+    forgejo_other | count > 0 %}
 
 [other]
-  {% if forgejo_other.show_footer_branding | default('') | string | length > 0 %}
-SHOW_FOOTER_BRANDING = {{ forgejo_other.show_footer_branding | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
-  {% if forgejo_other.show_footer_version | default('') | string | length > 0 %}
+
+
+{% if forgejo_other.show_footer_version | default('') | string | length > 0 %}
 SHOW_FOOTER_VERSION = {{ forgejo_other.show_footer_version | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
-  {% if forgejo_other.show_footer_template_load_time | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_other.show_footer_template_load_time | default('') | string | length > 0 %}
 SHOW_FOOTER_TEMPLATE_LOAD_TIME = {{ forgejo_other.show_footer_template_load_time | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
-  {% if forgejo_other.enable_sitemap | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_other.show_footer_powered_by | default('') | string | length > 0 %}
+SHOW_FOOTER_POWERED_BY = {{ forgejo_other.show_footer_powered_by | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_other.enable_sitemap | default('') | string | length > 0 %}
 ENABLE_SITEMAP = {{ forgejo_other.enable_sitemap | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
-  {% if forgejo_other.enable_feed | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_other.enable_feed | default('') | string | length > 0 %}
 ENABLE_FEED = {{ forgejo_other.enable_feed | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
+{% endif %}
+
+;; SHOW_FOOTER_BRANDING is deprecated: Use 'forgejo_other.show_footer_powered_by' instead
+
+{% if forgejo_other.show_footer_branding | default('') | string | length > 0 %}
+SHOW_FOOTER_BRANDING = {{ forgejo_other.show_footer_branding | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+{% endif %}

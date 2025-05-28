@@ -1,8 +1,19 @@
+;; Ansible jinja template project.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_project is defined and
+    forgejo_project | count > 0 %}
 
 [project]
-  {% if forgejo_project.project_board_basic_kanban_type | count > 0 %}
+
+
+{% if forgejo_project.project_board_basic_kanban_type is defined and
+forgejo_project.project_board_basic_kanban_type | count > 0 %}
 PROJECT_BOARD_BASIC_KANBAN_TYPE = {{ forgejo_project.project_board_basic_kanban_type | join(', ') }}
-  {% endif %}
-  {% if forgejo_project.project_board_bug_triage_type | count > 0 %}
+{% endif %}
+
+{% if forgejo_project.project_board_bug_triage_type is defined and
+forgejo_project.project_board_bug_triage_type | count > 0 %}
 PROJECT_BOARD_BUG_TRIAGE_TYPE = {{ forgejo_project.project_board_bug_triage_type | join(', ') }}
-  {% endif %}
+{% endif %}
+{% endif %}

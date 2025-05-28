@@ -1,8 +1,6 @@
+;; Ansible jinja template highlight.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
 
-  {% if forgejo_highlight.mapping is defined and
-        forgejo_highlight.mapping | count > 0 %}
-[highlight.mapping]
-    {% for k, v in forgejo_highlight.mapping.items() %}
-{{ k }} = {{ v }}
-    {% endfor %}
-  {% endif %}
+
+{# Section highlight.mapping is custom-handled in forgejo.custom.d/highlight.j2 #}
+

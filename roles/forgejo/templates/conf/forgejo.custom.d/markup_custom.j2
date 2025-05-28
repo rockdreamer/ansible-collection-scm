@@ -1,0 +1,21 @@
+{#
+Each element under markup, except markup.sanitizer can have the following keys:
+;ENABLED = false
+;FILE_EXTENSIONS = .adoc,.asciidoc
+;RENDER_COMMAND = "asciidoc --out-file=- -"
+;IS_INPUT_FILE = false
+;RENDER_CONTENT_MODE=sanitized
+#}
+;; From ansible jinja template markup_custom.j2
+
+{% if forgejo_markup is defined and forgejo_markup is mapping 
+  and forgejo_markup | count > 0 %}
+  {% for k, v in forgejo_markup.items() %}
+    {% if k != "sanitizer" and v is mapping and v | count > 0 %}
+[markup.{{ k }}]
+      {% for k2, v2 in v.items() %}
+{{ k | upper }} = {{ v2 }}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+{% endif %}

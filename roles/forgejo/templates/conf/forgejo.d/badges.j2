@@ -1,0 +1,17 @@
+;; Ansible jinja template badges.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_badges is defined and
+    forgejo_badges | count > 0 %}
+
+[badges]
+
+
+{% if forgejo_badges.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_badges.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_badges.generator_url_template | default('') | string | length > 0 %}
+GENERATOR_URL_TEMPLATE = {{ forgejo_badges.generator_url_template }}
+{% endif %}
+{% endif %}

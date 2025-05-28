@@ -1,10 +1,19 @@
+;; Ansible jinja template i18n.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_i18n is defined and
+    forgejo_i18n | count > 0 %}
 
 [i18n]
-  {% if forgejo_i18n.langs is defined and
-        forgejo_i18n.langs | count > 0 %}
+
+
+{% if forgejo_i18n.langs is defined and
+forgejo_i18n.langs | count > 0 %}
 LANGS = {{ forgejo_i18n.langs | join(', ') }}
-  {% endif %}
-  {% if forgejo_i18n.names is defined and
-        forgejo_i18n.names | count > 0 %}
+{% endif %}
+
+{% if forgejo_i18n.names is defined and
+forgejo_i18n.names | count > 0 %}
 NAMES = {{ forgejo_i18n.names | join(', ') }}
-  {% endif %}
+{% endif %}
+{% endif %}

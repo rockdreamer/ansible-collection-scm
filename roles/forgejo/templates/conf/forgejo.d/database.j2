@@ -1,86 +1,93 @@
-  {% if forgejo_database.db_type | default('') | string | length > 0 and
-        forgejo_database.db_type in ["mysql", "postgres", "mssql", "sqlite3"] %}
+;; Ansible jinja template database.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_database is defined and
+    forgejo_database | count > 0 %}
+
 [database]
+
+
+{% if forgejo_database.db_type | default('') | string | length > 0 %}
 DB_TYPE = {{ forgejo_database.db_type }}
-    {% if forgejo_database.host | default('') | string | length > 0 %}
-HOST = {{ forgejo_database.host }}
-    {% endif %}
-    {% if forgejo_database.name | default('') | string | length > 0 %}
-NAME = {{ forgejo_database.name }}
-    {% endif %}
-    {% if forgejo_database.user | default('') | string | length > 0 %}
-USER = {{ forgejo_database.user }}
-    {% endif %}
-    {% if forgejo_database.db_type in ["mysql", "postgres", "mssql"] %}
-      {% if forgejo_database.passwd | default('') | string | length > 0 %}
-PASSWD = {{ forgejo_database.passwd }}
-      {% endif %}
-    {% endif %}
-    {# DB specials ... #}
-    {# mysql | mariadb #}
-    {% if forgejo_database.db_type == "mysql" %}
-      {% if forgejo_database.ssl_mode | default('') | string | length > 0 and
-            forgejo_database.ssl_mode in ["false", "true", "skip-verify"] %}
-        {% if forgejo_database.ssl_mode != "skip-verify" %}
-SSL_MODE = {{ forgejo_database.ssl_mode | bodsch.core.config_bool(true_as='true', false_as='false') }}
-        {% else %}
-SSL_MODE = {{ forgejo_database.ssl_mode }}
-        {% endif %}
-      {% endif %}
-      {% if forgejo_database.charset | default('') | string | length > 0 %}
-CHARSET = {{ forgejo_database.charset }}
-      {% endif %}
-    {% endif %}
-    {# postgres #}
-    {% if forgejo_database.db_type == "postgres" %}
-      {% if forgejo_database.ssl_mode | default('') | string | length > 0 and
-            forgejo_database.ssl_mode in ["disable", "require", "verify-full"] %}
-SSL_MODE = {{ forgejo_database.ssl_mode }}
-      {% endif %}
-      {% if forgejo_database.schema | default('') | string | length > 0 %}
-SCHEMA = {{ forgejo_database.schema }}
-      {% endif %}
-    {% endif %}
-    {# sqlite #}
-    {% if forgejo_database.db_type == "sqlite3" %}
-      {% if forgejo_database.path | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_database.path | default('') | string | length > 0 %}
 PATH = {{ forgejo_database.path }}
-      {% endif %}
-      {% if forgejo_database.sqlite_timeout | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_database.sqlite_timeout | default('') | string | length > 0 %}
 SQLITE_TIMEOUT = {{ forgejo_database.sqlite_timeout }}
-      {% if forgejo_database.sqlite_journal_mode | default('') | string | length > 0 %}
-      {% endif %}
+{% endif %}
+
+{% if forgejo_database.sqlite_journal_mode | default('') | string | length > 0 %}
 SQLITE_JOURNAL_MODE = {{ forgejo_database.sqlite_journal_mode }}
-      {% endif %}
-    {% endif %}
-    {# mssql #}
-    {% if forgejo_database.db_type == "mssql" %}
-      {# #}
-    {% endif %}
-    {% if forgejo_database.iterate_buffer_size | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_database.host | default('') | string | length > 0 %}
+HOST = {{ forgejo_database.host }}
+{% endif %}
+
+{% if forgejo_database.name | default('') | string | length > 0 %}
+NAME = {{ forgejo_database.name }}
+{% endif %}
+
+{% if forgejo_database.user | default('') | string | length > 0 %}
+USER = {{ forgejo_database.user }}
+{% endif %}
+
+{% if forgejo_database.passwd | default('') | string | length > 0 %}
+PASSWD = {{ forgejo_database.passwd }}
+{% endif %}
+
+{% if forgejo_database.ssl_mode | default('') | string | length > 0 %}
+SSL_MODE = {{ forgejo_database.ssl_mode | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_database.charset_collation | default('') | string | length > 0 %}
+CHARSET_COLLATION = {{ forgejo_database.charset_collation }}
+{% endif %}
+
+{% if forgejo_database.schema | default('') | string | length > 0 %}
+SCHEMA = {{ forgejo_database.schema }}
+{% endif %}
+
+{% if forgejo_database.iterate_buffer_size | default('') | string | length > 0 %}
 ITERATE_BUFFER_SIZE = {{ forgejo_database.iterate_buffer_size }}
-    {% endif %}
-    {% if forgejo_database.log_sql | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_database.log_sql | default('') | string | length > 0 %}
 LOG_SQL = {{ forgejo_database.log_sql | bodsch.core.config_bool(true_as='true', false_as='false') }}
-    {% endif %}
-    {% if forgejo_database.db_retries | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_database.db_retries | default('') | string | length > 0 %}
 DB_RETRIES = {{ forgejo_database.db_retries }}
-    {% endif %}
-    {% if forgejo_database.db_retry_backoff | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_database.db_retry_backoff | default('') | string | length > 0 %}
 DB_RETRY_BACKOFF = {{ forgejo_database.db_retry_backoff }}
-    {% endif %}
-    {% if forgejo_database.max_idle_conns | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_database.max_idle_conns | default('') | string | length > 0 %}
 MAX_IDLE_CONNS = {{ forgejo_database.max_idle_conns }}
-    {% endif %}
-    {% if forgejo_database.conn_max_lifetime | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_database.conn_max_lifetime | default('') | string | length > 0 %}
 CONN_MAX_LIFETIME = {{ forgejo_database.conn_max_lifetime }}
-    {% endif %}
-    {% if forgejo_database.max_open_conns | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_database.conn_max_idletime | default('') | string | length > 0 %}
+CONN_MAX_IDLETIME = {{ forgejo_database.conn_max_idletime }}
+{% endif %}
+
+{% if forgejo_database.max_open_conns | default('') | string | length > 0 %}
 MAX_OPEN_CONNS = {{ forgejo_database.max_open_conns }}
-    {% endif %}
-    {% if forgejo_database.auto_migration | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_database.auto_migration | default('') | string | length > 0 %}
 AUTO_MIGRATION = {{ forgejo_database.auto_migration | bodsch.core.config_bool(true_as='true', false_as='false') }}
-    {% endif %}
-  {% else %}
-;; unkown database type
-  {% endif %}
+{% endif %}
+
+{% if forgejo_database.slow_query_treshold | default('') | string | length > 0 %}
+SLOW_QUERY_TRESHOLD = {{ forgejo_database.slow_query_treshold }}
+{% endif %}
+{% endif %}

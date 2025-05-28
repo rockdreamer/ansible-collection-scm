@@ -1,26 +1,41 @@
+;; Ansible jinja template session.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_session is defined and
+    forgejo_session | count > 0 %}
 
 [session]
-  {% if forgejo_session.provider | default('') | string | length > 0 and
-        forgejo_session.provider in ["memory", "file", "redis", "db", "mysql", "couchbase", "memcache", "postgres"] %}
+
+
+{% if forgejo_session.provider | default('') | string | length > 0 %}
 PROVIDER = {{ forgejo_session.provider }}
-  {% endif %}
-  {% if forgejo_session.provider_config | default('') | string | length > 0 and
-        forgejo_session.provider_config != "memory" %}
+{% endif %}
+
+{% if forgejo_session.provider_config | default('') | string | length > 0 %}
 PROVIDER_CONFIG = {{ forgejo_session.provider_config }}
-  {% endif %}
-  {% if forgejo_session.cookie_name | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_session.cookie_name | default('') | string | length > 0 %}
 COOKIE_NAME = {{ forgejo_session.cookie_name }}
-  {% endif %}
-  {% if forgejo_session.cookie_secure | default('') | string | length > 0 %}
-COOKIE_SECURE = {{ forgejo_session.cookie_secure | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
-  {% if forgejo_session.gc_interval_time | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_session.cookie_secure | default('') | string | length > 0 %}
+COOKIE_SECURE = {{ forgejo_session.cookie_secure }}
+{% endif %}
+
+{% if forgejo_session.gc_interval_time | default('') | string | length > 0 %}
 GC_INTERVAL_TIME = {{ forgejo_session.gc_interval_time }}
-  {% endif %}
-  {% if forgejo_session.session_life_time | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_session.session_life_time | default('') | string | length > 0 %}
 SESSION_LIFE_TIME = {{ forgejo_session.session_life_time }}
-  {% endif %}
-  {% if forgejo_session.same_site | default('') | string | length > 0 and
-        forgejo_session.same_site in ["none", "lax", "strict"] %}
+{% endif %}
+
+{% if forgejo_session.domain | default('') | string | length > 0 %}
+DOMAIN = {{ forgejo_session.domain }}
+{% endif %}
+
+{% if forgejo_session.same_site | default('') | string | length > 0 %}
 SAME_SITE = {{ forgejo_session.same_site }}
-  {% endif %}
+{% endif %}
+{% endif %}

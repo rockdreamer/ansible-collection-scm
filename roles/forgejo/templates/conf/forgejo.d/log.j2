@@ -1,42 +1,166 @@
+;; Ansible jinja template log.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_log is defined and
+    forgejo_log | count > 0 %}
 
 [log]
-  {% if forgejo_log.root_path | default('') | string | length > 0 %}
+
+
+{% if forgejo_log.root_path | default('') | string | length > 0 %}
 ROOT_PATH = {{ forgejo_log.root_path }}
-  {% endif %}
-  {% if forgejo_log.mode | count > 0 %}
-     {% set valid_log_mode = ["console", "file", "conn", "smtp", "database"] %}
-     {% set log_mode = forgejo_log.mode | bodsch.core.compare_list(compare_to_list=valid_log_mode) %}
-MODE = {{ log_mode | join(', ') }}
-  {% endif %}
-  {% if forgejo_log.level | default('') | string | length > 0 and
-        forgejo_log.level | lower in ["trace", "debug", "info", "warn", "error", "critical", "none"] %}
+{% endif %}
+
+{% if forgejo_log.mode is defined and
+forgejo_log.mode | count > 0 %}
+MODE = {{ forgejo_log.mode | join(', ') }}
+{% endif %}
+
+{% if forgejo_log.level | default('') | string | length > 0 %}
 LEVEL = {{ forgejo_log.level }}
-  {% endif %}
-  {% if forgejo_log.disable_router_log | default('') | string | length > 0 %}
-DISABLE_ROUTER_LOG = {{ forgejo_log.disable_router_log | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
-  {% if forgejo_log.router | default('') | string | length > 0 %}
-ROUTER = {{ forgejo_log.router }}
-  {% endif %}
-  {% if forgejo_log.enable_access_log | default('') | string | length > 0 %}
-ENABLE_ACCESS_LOG = {{ forgejo_log.enable_access_log | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
-  {% if forgejo_log.access | default('') | string | length > 0 %}
-ACCESS = {{ forgejo_log.access }}
-  {% endif %}
-  {% if forgejo_log.access_log_template | default('') | string | length > 0 %}
-  {#
-    {{.Ctx.RemoteAddr}} - {{.Identity}} {{.Start.Format "[02/Jan/2006:15:04:05 -0700]" }} "{{.Ctx.Req.Method}} {{.Ctx.Req.URL.RequestURI}} {{.Ctx.Req.Proto}}" {{.ResponseWriter.Status}} {{.ResponseWriter.Size}} "{{.Ctx.Req.Referer}}\" \"{{.Ctx.Req.UserAgent}}"
-  #}
-ACCESS_LOG_TEMPLATE = {{ forgejo_log.access_log_template }}
-  {% endif %}
-  {% if forgejo_log.enable_ssh_log | default('') | string | length > 0 %}
-ENABLE_SSH_LOG = {{ forgejo_log.enable_ssh_log | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
-  {% if forgejo_log.stacktrace_level | default('') | string | length > 0 and
-        forgejo_log.stacktrace_level | lower in ["trace", "debug", "info", "warn", "error", "critical", "none"] %}
+{% endif %}
+
+{% if forgejo_log.stacktrace_level | default('') | string | length > 0 %}
 STACKTRACE_LEVEL = {{ forgejo_log.stacktrace_level }}
-  {% endif %}
-  {% if forgejo_log.buffer_len | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_log.buffer_len | default('') | string | length > 0 %}
 BUFFER_LEN = {{ forgejo_log.buffer_len }}
-  {% endif %}
+{% endif %}
+
+{% if forgejo_log.logger.access.mode | default('') | string | length > 0 %}
+logger.access.MODE = {{ forgejo_log.logger.access.mode }}
+{% endif %}
+
+{% if forgejo_log.logger.router.mode is defined and
+forgejo_log.logger.router.mode | count > 0 %}
+logger.router.MODE = {{ forgejo_log.logger.router.mode | join(', ') }}
+{% endif %}
+
+{% if forgejo_log.logger.xorm.mode is defined and
+forgejo_log.logger.xorm.mode | count > 0 %}
+logger.xorm.MODE = {{ forgejo_log.logger.xorm.mode | join(', ') }}
+{% endif %}
+
+{% if forgejo_log.enable_ssh_log | default('') | string | length > 0 %}
+ENABLE_SSH_LOG = {{ forgejo_log.enable_ssh_log | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_log.request_id_headers | default('') | string | length > 0 %}
+REQUEST_ID_HEADERS = {{ forgejo_log.request_id_headers }}
+{% endif %}
+
+{% if forgejo_log.access_log_template | default('') | string | length > 0 %}
+ACCESS_LOG_TEMPLATE = {{ forgejo_log.access_log_template }}
+{% endif %}
+
+;; DISABLE_ROUTER_LOG is deprecated: Use 'forgejo_log.logger.router.mode = none' instead
+
+{% if forgejo_log.disable_router_log | default('') | string | length > 0 %}
+DISABLE_ROUTER_LOG = {{ forgejo_log.disable_router_log | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+;; ROUTER is deprecated: Use 'forgejo_log.logger.router.mode = none' instead
+
+{% if forgejo_log.router | default('') | string | length > 0 %}
+ROUTER = {{ forgejo_log.router | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+;; ENABLE_ACCESS_LOG is deprecated: Use 'logger.access.MODE=,' instead
+
+{% if forgejo_log.enable_access_log | default('') | string | length > 0 %}
+ENABLE_ACCESS_LOG = {{ forgejo_log.enable_access_log | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+;; ACCESS is deprecated: Use 'logger.access.MODE' instead
+
+{% if forgejo_log.access | default('') | string | length > 0 %}
+ACCESS = {{ forgejo_log.access | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+{% endif %}
+
+{# Section log.%(WriterMode) is custom-handled in forgejo.custom.d/log_writermode.j2 #}
+
+
+{% if forgejo_log.console is defined and
+    forgejo_log.console | count > 0 %}
+
+[log.console]
+
+
+{% if forgejo_log.console.stderr | default('') | string | length > 0 %}
+STDERR = {{ forgejo_log.console.stderr | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_log.console.colorize | default('') | string | length > 0 %}
+COLORIZE = {{ forgejo_log.console.colorize | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+{% endif %}
+{% if forgejo_log.file is defined and
+    forgejo_log.file | count > 0 %}
+
+[log.file]
+
+
+{% if forgejo_log.file.file_name | default('') | string | length > 0 %}
+FILE_NAME = {{ forgejo_log.file.file_name }}
+{% endif %}
+
+{% if forgejo_log.file.log_rotate | default('') | string | length > 0 %}
+LOG_ROTATE = {{ forgejo_log.file.log_rotate | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_log.file.max_size_shift | default('') | string | length > 0 %}
+MAX_SIZE_SHIFT = {{ forgejo_log.file.max_size_shift }}
+{% endif %}
+
+{% if forgejo_log.file.daily_rotate | default('') | string | length > 0 %}
+DAILY_ROTATE = {{ forgejo_log.file.daily_rotate | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_log.file.max_days | default('') | string | length > 0 %}
+MAX_DAYS = {{ forgejo_log.file.max_days }}
+{% endif %}
+
+{% if forgejo_log.file.compress | default('') | string | length > 0 %}
+COMPRESS = {{ forgejo_log.file.compress | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_log.file.compression_level | default('') | string | length > 0 %}
+COMPRESSION_LEVEL = {{ forgejo_log.file.compression_level }}
+{% endif %}
+{% endif %}
+{% if forgejo_log.conn is defined and
+    forgejo_log.conn | count > 0 %}
+
+[log.conn]
+
+
+{% if forgejo_log.conn.reconnect_on_msg | default('') | string | length > 0 %}
+RECONNECT_ON_MSG = {{ forgejo_log.conn.reconnect_on_msg | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_log.conn.reconnect | default('') | string | length > 0 %}
+RECONNECT = {{ forgejo_log.conn.reconnect | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_log.conn.protocol | default('') | string | length > 0 %}
+PROTOCOL = {{ forgejo_log.conn.protocol }}
+{% endif %}
+
+{% if forgejo_log.conn.addr | default('') | string | length > 0 %}
+ADDR = {{ forgejo_log.conn.addr }}
+{% endif %}
+{% endif %}
+{% if forgejo_log.smtp is defined and
+    forgejo_log.smtp | count > 0 %}
+
+[log.smtp]
+
+
+;; SMTP is deprecated: The SMTP logger was removed
+
+{% if forgejo_log.smtp.smtp | default('') | string | length > 0 %}
+SMTP = {{ forgejo_log.smtp.smtp | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+{% endif %}

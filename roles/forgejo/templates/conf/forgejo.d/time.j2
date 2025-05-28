@@ -1,8 +1,19 @@
+;; Ansible jinja template time.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_time is defined and
+    forgejo_time | count > 0 %}
 
 [time]
-  {% if forgejo_time.format | default('') | string | length > 0 %}
-FORMAT = {{ forgejo_time.format }}
-  {% endif %}
-  {% if forgejo_time.default_ui_location | default('') | string | length > 0 %}
+
+
+{% if forgejo_time.default_ui_location | default('') | string | length > 0 %}
 DEFAULT_UI_LOCATION = {{ forgejo_time.default_ui_location }}
-  {% endif %}
+{% endif %}
+
+;; FORMAT is deprecated: This is no longer used.
+
+{% if forgejo_time.format | default('') | string | length > 0 %}
+FORMAT = {{ forgejo_time.format }}
+{% endif %}
+{% endif %}

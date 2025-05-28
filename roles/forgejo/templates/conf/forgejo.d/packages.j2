@@ -1,98 +1,169 @@
+;; Ansible jinja template packages.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_packages is defined and
+    forgejo_packages | count > 0 %}
 
 [packages]
+
+
+{% if forgejo_packages.enabled | default('') | string | length > 0 %}
 ENABLED = {{ forgejo_packages.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% if forgejo_packages.chunked_upload_path | default('') | string | length > 0 %}
-CHUNKED_UPLOAD_PATH = {{ forgejo_packages.chunked_upload_path }}
-  {% endif %}
-  {% if forgejo_packages.limit_total_owner_count | default('') | string | length > 0 %}
-LIMIT_TOTAL_OWNER_COUNT = {{ forgejo_packages.limit_total_owner_count }}
-  {% endif %}
-  {% if forgejo_packages.limit_total_owner_size | default('') | string | length > 0 %}
-LIMIT_TOTAL_OWNER_SIZE = {{ forgejo_packages.limit_total_owner_size }}
-  {% endif %}
-  {% if forgejo_packages.limit_size_cargo | default('') | string | length > 0 %}
-LIMIT_SIZE_CARGO = {{ forgejo_packages.limit_size_cargo }}
-  {% endif %}
-  {% if forgejo_packages.limit_size_chef | default('') | string | length > 0 %}
-LIMIT_SIZE_CHEF = {{ forgejo_packages.limit_size_chef }}
-  {% endif %}
-  {% if forgejo_packages.limit_size_composer | default('') | string | length > 0 %}
-LIMIT_SIZE_COMPOSER = {{ forgejo_packages.limit_size_composer }}
-  {% endif %}
-  {% if forgejo_packages.limit_size_conan | default('') | string | length > 0 %}
-LIMIT_SIZE_CONAN = {{ forgejo_packages.limit_size_conan }}
-  {% endif %}
-  {% if forgejo_packages.limit_size_conda | default('') | string | length > 0 %}
-LIMIT_SIZE_CONDA = {{ forgejo_packages.limit_size_conda }}
-  {% endif %}
-  {% if forgejo_packages.limit_size_container | default('') | string | length > 0 %}
-LIMIT_SIZE_CONTAINER = {{ forgejo_packages.limit_size_container }}
-  {% endif %}
-  {% if forgejo_packages.limit_size_generic | default('') | string | length > 0 %}
-LIMIT_SIZE_GENERIC = {{ forgejo_packages.limit_size_generic }}
-  {% endif %}
-  {% if forgejo_packages.limit_size_helm | default('') | string | length > 0 %}
-LIMIT_SIZE_HELM = {{ forgejo_packages.limit_size_helm }}
-  {% endif %}
-  {% if forgejo_packages.limit_size_maven | default('') | string | length > 0 %}
-LIMIT_SIZE_MAVEN = {{ forgejo_packages.limit_size_maven }}
-  {% endif %}
-  {% if forgejo_packages.limit_size_npm | default('') | string | length > 0 %}
-LIMIT_SIZE_NPM = {{ forgejo_packages.limit_size_npm }}
-  {% endif %}
-  {% if forgejo_packages.limit_size_nuget | default('') | string | length > 0 %}
-LIMIT_SIZE_NUGET = {{ forgejo_packages.limit_size_nuget }}
-  {% endif %}
-  {% if forgejo_packages.limit_size_pub | default('') | string | length > 0 %}
-LIMIT_SIZE_PUB = {{ forgejo_packages.limit_size_pub }}
-  {% endif %}
-  {% if forgejo_packages.limit_size_pypi | default('') | string | length > 0 %}
-LIMIT_SIZE_PYPI = {{ forgejo_packages.limit_size_pypi }}
-  {% endif %}
-  {% if forgejo_packages.limit_size_rubygems | default('') | string | length > 0 %}
-LIMIT_SIZE_RUBYGEMS = {{ forgejo_packages.limit_size_rubygems }}
-  {% endif %}
-  {% if forgejo_packages.limit_size_swift | default('') | string | length > 0 %}
-LIMIT_SIZE_SWIFT = {{ forgejo_packages.limit_size_swift }}
-  {% endif %}
-  {% if forgejo_packages.limit_size_vagrant | default('') | string | length > 0 %}
-LIMIT_SIZE_VAGRANT = {{ forgejo_packages.limit_size_vagrant }}
-  {% endif %}
-{% if forgejo_packages.storage_type | default('') | string | length > 0 and
-      forgejo_packages.storage_type in ["local", "minio"] %}
+{% endif %}
+
+{% if forgejo_packages.storage_type | default('') | string | length > 0 %}
 STORAGE_TYPE = {{ forgejo_packages.storage_type }}
-  {% if forgejo_packages.storage_type == "local" %}
-    {% if forgejo_packages.path | default('') | string | length > 0 %}
-PATH = {{ forgejo_packages.path }}
-    {% endif %}
-  {% endif %}
-  {% if forgejo_packages.storage_type == "minio" %}
-    {% if forgejo_packages.minio_base_path | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_packages.minio_base_path | default('') | string | length > 0 %}
 MINIO_BASE_PATH = {{ forgejo_packages.minio_base_path }}
-    {% endif %}
-    {% if forgejo_packages.minio_endpoint | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_packages.chunked_upload_path | default('') | string | length > 0 %}
+CHUNKED_UPLOAD_PATH = {{ forgejo_packages.chunked_upload_path }}
+{% endif %}
+
+{% if forgejo_packages.limit_total_owner_count | default('') | string | length > 0 %}
+LIMIT_TOTAL_OWNER_COUNT = {{ forgejo_packages.limit_total_owner_count }}
+{% endif %}
+
+{% if forgejo_packages.limit_total_owner_size | default('') | string | length > 0 %}
+LIMIT_TOTAL_OWNER_SIZE = {{ forgejo_packages.limit_total_owner_size }}
+{% endif %}
+
+{% if forgejo_packages.limit_size_alpine | default('') | string | length > 0 %}
+LIMIT_SIZE_ALPINE = {{ forgejo_packages.limit_size_alpine }}
+{% endif %}
+
+{% if forgejo_packages.limit_size_cargo | default('') | string | length > 0 %}
+LIMIT_SIZE_CARGO = {{ forgejo_packages.limit_size_cargo }}
+{% endif %}
+
+{% if forgejo_packages.limit_size_chef | default('') | string | length > 0 %}
+LIMIT_SIZE_CHEF = {{ forgejo_packages.limit_size_chef }}
+{% endif %}
+
+{% if forgejo_packages.limit_size_composer | default('') | string | length > 0 %}
+LIMIT_SIZE_COMPOSER = {{ forgejo_packages.limit_size_composer }}
+{% endif %}
+
+{% if forgejo_packages.limit_size_conan | default('') | string | length > 0 %}
+LIMIT_SIZE_CONAN = {{ forgejo_packages.limit_size_conan }}
+{% endif %}
+
+{% if forgejo_packages.limit_size_conda | default('') | string | length > 0 %}
+LIMIT_SIZE_CONDA = {{ forgejo_packages.limit_size_conda }}
+{% endif %}
+
+{% if forgejo_packages.limit_size_container | default('') | string | length > 0 %}
+LIMIT_SIZE_CONTAINER = {{ forgejo_packages.limit_size_container }}
+{% endif %}
+
+{% if forgejo_packages.limit_size_cran | default('') | string | length > 0 %}
+LIMIT_SIZE_CRAN = {{ forgejo_packages.limit_size_cran }}
+{% endif %}
+
+{% if forgejo_packages.limit_size_debian | default('') | string | length > 0 %}
+LIMIT_SIZE_DEBIAN = {{ forgejo_packages.limit_size_debian }}
+{% endif %}
+
+{% if forgejo_packages.limit_size_generic | default('') | string | length > 0 %}
+LIMIT_SIZE_GENERIC = {{ forgejo_packages.limit_size_generic }}
+{% endif %}
+
+{% if forgejo_packages.limit_size_go | default('') | string | length > 0 %}
+LIMIT_SIZE_GO = {{ forgejo_packages.limit_size_go }}
+{% endif %}
+
+{% if forgejo_packages.limit_size_helm | default('') | string | length > 0 %}
+LIMIT_SIZE_HELM = {{ forgejo_packages.limit_size_helm }}
+{% endif %}
+
+{% if forgejo_packages.limit_size_maven | default('') | string | length > 0 %}
+LIMIT_SIZE_MAVEN = {{ forgejo_packages.limit_size_maven }}
+{% endif %}
+
+{% if forgejo_packages.limit_size_npm | default('') | string | length > 0 %}
+LIMIT_SIZE_NPM = {{ forgejo_packages.limit_size_npm }}
+{% endif %}
+
+{% if forgejo_packages.limit_size_nuget | default('') | string | length > 0 %}
+LIMIT_SIZE_NUGET = {{ forgejo_packages.limit_size_nuget }}
+{% endif %}
+
+{% if forgejo_packages.limit_size_pub | default('') | string | length > 0 %}
+LIMIT_SIZE_PUB = {{ forgejo_packages.limit_size_pub }}
+{% endif %}
+
+{% if forgejo_packages.limit_size_pypi | default('') | string | length > 0 %}
+LIMIT_SIZE_PYPI = {{ forgejo_packages.limit_size_pypi }}
+{% endif %}
+
+{% if forgejo_packages.limit_size_rpm | default('') | string | length > 0 %}
+LIMIT_SIZE_RPM = {{ forgejo_packages.limit_size_rpm }}
+{% endif %}
+
+{% if forgejo_packages.limit_size_rubygems | default('') | string | length > 0 %}
+LIMIT_SIZE_RUBYGEMS = {{ forgejo_packages.limit_size_rubygems }}
+{% endif %}
+
+{% if forgejo_packages.limit_size_swift | default('') | string | length > 0 %}
+LIMIT_SIZE_SWIFT = {{ forgejo_packages.limit_size_swift }}
+{% endif %}
+
+{% if forgejo_packages.limit_size_vagrant | default('') | string | length > 0 %}
+LIMIT_SIZE_VAGRANT = {{ forgejo_packages.limit_size_vagrant }}
+{% endif %}
+
+{% if forgejo_packages.default_rpm_sign_enabled | default('') | string | length > 0 %}
+DEFAULT_RPM_SIGN_ENABLED = {{ forgejo_packages.default_rpm_sign_enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+;; MINIO_ENDPOINT is deprecated: Set forgejo_packages.storage_type to a storage name like my_minio and use `storage.my_minio.minio_endpoint` instead
+
+{% if forgejo_packages.minio_endpoint | default('') | string | length > 0 %}
 MINIO_ENDPOINT = {{ forgejo_packages.minio_endpoint }}
-    {% endif %}
-    {% if forgejo_packages.minio_access_key_id | default('') | string | length > 0 %}
+{% endif %}
+
+;; MINIO_ACCESS_KEY_ID is deprecated: Set forgejo_packages.storage_type to a storage name like my_minio and use `storage.my_minio.minio_access_key_id` instead
+
+{% if forgejo_packages.minio_access_key_id | default('') | string | length > 0 %}
 MINIO_ACCESS_KEY_ID = {{ forgejo_packages.minio_access_key_id }}
-    {% endif %}
-    {% if forgejo_packages.minio_secret_access_key | default('') | string | length > 0 %}
+{% endif %}
+
+;; MINIO_SECRET_ACCESS_KEY is deprecated: Set forgejo_packages.storage_type to a storage name like my_minio and use `storage.my_minio.minio_secret_access_key` instead
+
+{% if forgejo_packages.minio_secret_access_key | default('') | string | length > 0 %}
 MINIO_SECRET_ACCESS_KEY = {{ forgejo_packages.minio_secret_access_key }}
-    {% endif %}
-    {% if forgejo_packages.minio_bucket | default('') | string | length > 0 %}
+{% endif %}
+
+;; MINIO_BUCKET is deprecated: Set forgejo_packages.storage_type to a storage name like my_minio and use `storage.my_minio.minio_bucket` instead
+
+{% if forgejo_packages.minio_bucket | default('') | string | length > 0 %}
 MINIO_BUCKET = {{ forgejo_packages.minio_bucket }}
-    {% endif %}
-    {% if forgejo_packages.minio_location | default('') | string | length > 0 %}
+{% endif %}
+
+;; MINIO_LOCATION is deprecated: Set forgejo_packages.storage_type to a storage name like my_minio and use `storage.my_minio.minio_location` instead
+
+{% if forgejo_packages.minio_location | default('') | string | length > 0 %}
 MINIO_LOCATION = {{ forgejo_packages.minio_location }}
-    {% endif %}
-    {% if forgejo_packages.minio_use_ssl | default('') | string | length > 0 %}
-MINIO_USE_SSL = {{ forgejo_packages.minio_use_ssl | bool | ternary('true', 'false') }}
-    {% endif %}
-    {% if forgejo_packages.minio_insecure_skip_verify | default('') | string | length > 0 %}
-MINIO_INSECURE_SKIP_VERIFY = {{ forgejo_packages.minio_insecure_skip_verify | bool | ternary('true', 'false') }}
-    {% endif %}
-    {% if forgejo_packages.minio_checksum_algorithm | default('') | string | length > 0 and
-          forgejo_packages.minio_checksum_algorithm in ["default", "md5"] %}
+{% endif %}
+
+;; MINIO_USE_SSL is deprecated: Set forgejo_packages.storage_type to a storage name like my_minio and use `storage.my_minio.minio_use_ssl` instead
+
+{% if forgejo_packages.minio_use_ssl | default('') | string | length > 0 %}
+MINIO_USE_SSL = {{ forgejo_packages.minio_use_ssl | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+;; MINIO_INSECURE_SKIP_VERIFY is deprecated: Set forgejo_packages.storage_type to a storage name like my_minio and use `storage.my_minio.minio_insecure_skip_verify` instead
+
+{% if forgejo_packages.minio_insecure_skip_verify | default('') | string | length > 0 %}
+MINIO_INSECURE_SKIP_VERIFY = {{ forgejo_packages.minio_insecure_skip_verify | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+;; MINIO_CHECKSUM_ALGORITHM is deprecated: Set forgejo_packages.storage_type to a storage name like my_minio and use `storage.my_minio.minio_checksum_algorithm` instead
+
+{% if forgejo_packages.minio_checksum_algorithm | default('') | string | length > 0 %}
 MINIO_CHECKSUM_ALGORITHM = {{ forgejo_packages.minio_checksum_algorithm }}
-    {% endif %}  {% endif %}
+{% endif %}
 {% endif %}

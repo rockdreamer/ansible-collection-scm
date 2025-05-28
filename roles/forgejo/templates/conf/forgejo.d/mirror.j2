@@ -1,15 +1,41 @@
+;; Ansible jinja template mirror.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_mirror is defined and
+    forgejo_mirror | count > 0 %}
 
 [mirror]
-ENABLED = {{ forgejo_mirror.enabled | default('false') | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% if forgejo_mirror.disable_new_pull | default('') | string | length > 0 %}
-DISABLE_NEW_PULL = {{ forgejo_mirror.disable_new_pull | default('false') | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
-  {% if forgejo_mirror.disable_new_push | default('') | string | length > 0 %}
-DISABLE_NEW_PUSH = {{ forgejo_mirror.disable_new_push | default('false') | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
-  {% if forgejo_mirror.default_interval | default('') | string | length > 0 %}
+
+
+{% if forgejo_mirror.enabled | default('') | string | length > 0 %}
+ENABLED = {{ forgejo_mirror.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_mirror.disable_new_pull | default('') | string | length > 0 %}
+DISABLE_NEW_PULL = {{ forgejo_mirror.disable_new_pull | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_mirror.disable_new_push | default('') | string | length > 0 %}
+DISABLE_NEW_PUSH = {{ forgejo_mirror.disable_new_push | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_mirror.default_interval | default('') | string | length > 0 %}
 DEFAULT_INTERVAL = {{ forgejo_mirror.default_interval }}
-  {% endif %}
-  {% if forgejo_mirror.min_interval | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_mirror.min_interval | default('') | string | length > 0 %}
 MIN_INTERVAL = {{ forgejo_mirror.min_interval }}
-  {% endif %}
+{% endif %}
+
+;; MIRROR_QUEUE_LENGTH is deprecated: Use 'queue.mirror.length' instead
+
+{% if forgejo_mirror.mirror_queue_length | default('') | string | length > 0 %}
+MIRROR_QUEUE_LENGTH = {{ forgejo_mirror.mirror_queue_length | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+;; PULL_REQUEST_QUEUE_LENGTH is deprecated: Use 'queue.pr_patch_checker.length' instead
+
+{% if forgejo_mirror.pull_request_queue_length | default('') | string | length > 0 %}
+PULL_REQUEST_QUEUE_LENGTH = {{ forgejo_mirror.pull_request_queue_length | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+{% endif %}

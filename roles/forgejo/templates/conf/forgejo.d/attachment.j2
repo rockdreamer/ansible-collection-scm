@@ -1,60 +1,78 @@
+;; Ansible jinja template attachment.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_attachment is defined and
+    forgejo_attachment | count > 0 %}
 
 [attachment]
+
+
+{% if forgejo_attachment.enabled | default('') | string | length > 0 %}
 ENABLED = {{ forgejo_attachment.enabled | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% if forgejo_attachment.allowed_types is defined and
-        forgejo_attachment.allowed_types | count > 0 %}
+{% endif %}
+
+{% if forgejo_attachment.allowed_types is defined and
+forgejo_attachment.allowed_types | count > 0 %}
 ALLOWED_TYPES = {{ forgejo_attachment.allowed_types | join(', ') }}
-  {% endif %}
-  {% if forgejo_attachment.max_size | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_attachment.max_size | default('') | string | length > 0 %}
 MAX_SIZE = {{ forgejo_attachment.max_size }}
-  {% endif %}
-  {% if forgejo_attachment.max_files | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_attachment.max_files | default('') | string | length > 0 %}
 MAX_FILES = {{ forgejo_attachment.max_files }}
-  {% endif %}
-  {% if forgejo_attachment.storage_type | default('') | string | length > 0 and
-        forgejo_attachment.storage_type in ["local", "minio"] %}
+{% endif %}
+
+{% if forgejo_attachment.storage_type | default('') | string | length > 0 %}
 STORAGE_TYPE = {{ forgejo_attachment.storage_type }}
-  {% endif %}
-  {% if forgejo_attachment.storage_type | default('') | string | length > 0 and
-        forgejo_attachment.storage_type == "minio" and
-        forgejo_attachment.serve_direct | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_attachment.serve_direct | default('') | string | length > 0 %}
 SERVE_DIRECT = {{ forgejo_attachment.serve_direct | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
-  {% if forgejo_attachment.storage_type | default('') | string | length > 0 and
-        forgejo_attachment.storage_type == "local" and
-        forgejo_attachment.path | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_attachment.path | default('') | string | length > 0 %}
 PATH = {{ forgejo_attachment.path }}
-  {% endif %}
-  {% if forgejo_attachment.storage_type | default('') | string | length > 0 and
-        forgejo_attachment.storage_type == "minio" and
-        forgejo_attachment.minio is defined and
-        forgejo_attachment.minio | count > 0 %}
-    {% if forgejo_attachment.minio.endpoint | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_attachment.minio.endpoint | default('') | string | length > 0 %}
 MINIO_ENDPOINT = {{ forgejo_attachment.minio.endpoint }}
-    {% endif %}
-    {% if forgejo_attachment.minio.access_key_id | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_attachment.minio.access_key_id | default('') | string | length > 0 %}
 MINIO_ACCESS_KEY_ID = {{ forgejo_attachment.minio.access_key_id }}
-    {% endif %}
-    {% if forgejo_attachment.minio.secret_access_key | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_attachment.minio.secret_access_key | default('') | string | length > 0 %}
 MINIO_SECRET_ACCESS_KEY = {{ forgejo_attachment.minio.secret_access_key }}
-    {% endif %}
-    {% if forgejo_attachment.minio.bucket | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_attachment.minio.bucket | default('') | string | length > 0 %}
 MINIO_BUCKET = {{ forgejo_attachment.minio.bucket }}
-    {% endif %}
-    {% if forgejo_attachment.minio.location | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_attachment.minio.bucket_lookup | default('') | string | length > 0 %}
+MINIO_BUCKET_LOOKUP = {{ forgejo_attachment.minio.bucket_lookup }}
+{% endif %}
+
+{% if forgejo_attachment.minio.location | default('') | string | length > 0 %}
 MINIO_LOCATION = {{ forgejo_attachment.minio.location }}
-    {% endif %}
-    {% if forgejo_attachment.minio.base_path | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_attachment.minio.base_path | default('') | string | length > 0 %}
 MINIO_BASE_PATH = {{ forgejo_attachment.minio.base_path }}
-    {% endif %}
-    {% if forgejo_attachment.minio.use_ssl | default('') | string | length > 0 %}
-MINIO_USE_SSL = {{ forgejo_attachment.minio.use_ssl | bool | ternary('true', 'false') }}
-    {% endif %}
-    {% if forgejo_attachment.minio.insecure_skip_verify | default('') | string | length > 0 %}
-MINIO_INSECURE_SKIP_VERIFY = {{ forgejo_attachment.minio.insecure_skip_verify | bool | ternary('true', 'false') }}
-    {% endif %}
-    {% if forgejo_attachment.minio.checksum_algorithm | default('') | string | length > 0 and
-          forgejo_attachment.minio.checksum_algorithm in ["default", "md5"] %}
+{% endif %}
+
+{% if forgejo_attachment.minio.use_ssl | default('') | string | length > 0 %}
+MINIO_USE_SSL = {{ forgejo_attachment.minio.use_ssl | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_attachment.minio.insecure_skip_verify | default('') | string | length > 0 %}
+MINIO_INSECURE_SKIP_VERIFY = {{ forgejo_attachment.minio.insecure_skip_verify | bodsch.core.config_bool(true_as='true', false_as='false') }}
+{% endif %}
+
+{% if forgejo_attachment.minio.checksum_algorithm | default('') | string | length > 0 %}
 MINIO_CHECKSUM_ALGORITHM = {{ forgejo_attachment.minio.checksum_algorithm }}
-    {% endif %}
-  {% endif %}
+{% endif %}
+{% endif %}

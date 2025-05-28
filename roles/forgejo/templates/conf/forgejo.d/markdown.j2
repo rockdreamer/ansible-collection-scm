@@ -1,17 +1,31 @@
+;; Ansible jinja template markdown.j2 generated from /custom/conf/app.default.ini
+;; git id 12.0.0-dev-323-8b93f41aaa by update_from_default_ini.py
+
+{% if forgejo_markdown is defined and
+    forgejo_markdown | count > 0 %}
 
 [markdown]
-  {% if forgejo_markdown.enable_hard_line_break_in_comments | default('') | string | length > 0 %}
+
+
+{% if forgejo_markdown.enable_hard_line_break_in_comments | default('') | string | length > 0 %}
 ENABLE_HARD_LINE_BREAK_IN_COMMENTS = {{ forgejo_markdown.enable_hard_line_break_in_comments | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
-  {% if forgejo_markdown.enable_hard_line_break_in_documents | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_markdown.enable_hard_line_break_in_documents | default('') | string | length > 0 %}
 ENABLE_HARD_LINE_BREAK_IN_DOCUMENTS = {{ forgejo_markdown.enable_hard_line_break_in_documents | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
-  {% if forgejo_markdown.custom_url_schemes | count > 0 %}
+{% endif %}
+
+{% if forgejo_markdown.custom_url_schemes is defined and
+forgejo_markdown.custom_url_schemes | count > 0 %}
 CUSTOM_URL_SCHEMES = {{ forgejo_markdown.custom_url_schemes | join(', ') }}
-  {% endif %}
-  {% if forgejo_markdown.file_extensions | count > 0 %}
+{% endif %}
+
+{% if forgejo_markdown.file_extensions is defined and
+forgejo_markdown.file_extensions | count > 0 %}
 FILE_EXTENSIONS = {{ forgejo_markdown.file_extensions | join(', ') }}
-  {% endif %}
-  {% if forgejo_markdown.enable_math | default('') | string | length > 0 %}
+{% endif %}
+
+{% if forgejo_markdown.enable_math | default('') | string | length > 0 %}
 ENABLE_MATH = {{ forgejo_markdown.enable_math | bodsch.core.config_bool(true_as='true', false_as='false') }}
-  {% endif %}
+{% endif %}
+{% endif %}
