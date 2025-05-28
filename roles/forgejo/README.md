@@ -50,6 +50,8 @@ forgejo_systemd:
       - network.target
     wants: []
     requires: []
+    # Uncomment the next line if you have repos with lots of files and get a HTTP 500 error because of that
+    # number_of_files: 524288
 
 forgejo_release: {}
 
@@ -604,19 +606,6 @@ forgejo_log:
     protocol: tcp
     #  host address
     addr: ""
-  smtp:
-    #  for "smtp" mode only
-    level: ""
-    #  name displayed in mail title, default is "diagnostic message from server"
-    subject: diagnostic message from server
-    #  mail server
-    host: ""
-    #  mailer user name and password
-    user: ""
-    #  use passwd: `your password` for quoting if you use special characters in the password.
-    passwd: ""
-    #  receivers, can be one or more, e.g. 1@example.com,2@example.com
-    receivers: ""
 
 forgejo_mailer:
   enabled: false

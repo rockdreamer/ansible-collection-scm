@@ -1,12 +1,12 @@
 {{ ansible_managed | comment }}
 
 [Unit]
-Description       = Gitea Web Socket
+Description       = Forgejo Web Socket
 PartOf            = forgejo.service
 
 [Socket]
 Service           = forgejo.service
-ListenStream      = <some_port>
+ListenStream      = {{ forgejo_server.http_port }}
 NoDelay           = true
 
 [Install]

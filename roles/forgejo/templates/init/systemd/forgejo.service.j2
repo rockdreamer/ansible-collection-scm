@@ -2,7 +2,7 @@
 # {{ ansible_managed }}
 
 [Unit]
-Description             = Gitea (Git with a cup of tea)
+Description             = Forgejo
 
 {% if forgejo_systemd.unit.after is defined and
       forgejo_systemd.unit.after | count > 0 %}
@@ -43,29 +43,10 @@ Requires              = network.target {{ forgejo_systemd.unit.requires | join('
 #After=forgejo.main.socket
 #Requires=forgejo.main.socket
 #
-###
-# (You can also provide forgejo an http fallback and/or ssh socket too)
-#
-# An example of /etc/systemd/system/forgejo.main.socket
-###
-##
-## [Unit]
-## Description=Gitea Web Socket
-## PartOf=forgejo.service
-##
-## [Socket]
-## Service=forgejo.service
-## ListenStream=<some_port>
-## NoDelay=true
-##
-## [Install]
-## WantedBy=sockets.target
-##
-###
-
 [Service]
-# Uncomment the next line if you have repos with lots of files and get a HTTP 500 error because of that
-# LimitNOFILE             = 524288:524288
+{% if forgejo_systemd.unit.number_of_files | default('') | string | length > 0 %}
+LimitNOFILE             = {{ forgejo_systemd.unit.number_of_files }}:{{ forgejo_systemd.unit.number_of_files }}
+{% endif %}
 RestartSec              = 4s
 Type                    = simple
 User                    = {{ forgejo_system_user }}
