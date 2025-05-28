@@ -464,13 +464,6 @@ forgejo_defaults_log:
     reconnect: ""                                 # false
     protocol: ""                                  # tcp (either "tcp", "unix" or "udp")
     addr: ""
-  smtp:
-    level: ""
-    subject: ""                                   # diagnostic message from server
-    host: ""
-    user: ""
-    passwd: ""
-    receivers: []
 
 forgejo_defaults_mailer:
   enabled: ""                                     # false
