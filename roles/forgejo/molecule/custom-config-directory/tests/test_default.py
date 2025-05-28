@@ -108,7 +108,8 @@ def local_facts(host):
 
 
 @pytest.mark.parametrize("dirs", [
-    "/srv/forgejo/config"
+    "/srv/forgejo/config",
+    "/srv/git"
 ])
 def test_directories(host, dirs):
     d = host.file(dirs)
@@ -159,7 +160,7 @@ def test_user(host, get_vars):
     assert host.group(group).exists
     assert host.user(user).exists
     assert group in host.user(user).groups
-    assert host.user(user).home == "/srv/forgejo"
+    assert host.user(user).home == "/srv/git"
 
 
 def test_service(host, get_vars):

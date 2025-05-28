@@ -17,13 +17,14 @@
         # append: true
         shell: /bin/bash
         system: true
-        createhome: false
-        home: "{{ forgejo_working_dir }}"
+        createhome: "{{ forgejo_system_user_create_home }}"
+        home: "{{ forgejo_system_user_home_dir }}"
 
 - name: create install directory
   ansible.builtin.file:
     path: "{{ forgejo_install_path }}"
     state: directory
+    recurse: true
     owner: "{{ forgejo_system_user }}"
     group: "{{ forgejo_system_group }}"
     mode: 0755

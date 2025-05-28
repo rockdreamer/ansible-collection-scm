@@ -1,6 +1,8 @@
 ---
 forgejo_config_dir: /srv/forgejo/config
 forgejo_working_dir: /srv/forgejo
+forgejo_system_user_home_dir: /srv/git
+forgejo_system_user_create_home: true
 
 forgejo_admin_user:
   username: "someuser"

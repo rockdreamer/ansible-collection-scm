@@ -6,7 +6,8 @@ forgejo_system_user: forgejo
 forgejo_system_group: forgejo
 forgejo_config_dir: /etc/forgejo
 forgejo_working_dir: /var/lib/forgejo
-forgejo_home_dir: /home/{{ forgejo_system_user }}
+forgejo_system_user_home_dir: "{{ forgejo_working_dir }}"
+forgejo_system_user_create_home: false
 
 forgejo_systemd:
   unit:
